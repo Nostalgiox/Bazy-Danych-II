@@ -1,0 +1,10 @@
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (1, 45.00, 1.50, 700.00, 200.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (2, 50.00, 1.70, 800.00, 220.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (3, 39.00, 1.45, 720.00, 190.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (4, 45.00, 1.80, 690.00, 240.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (5, 44.00, 1.25, 650.00, 225.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (6, 43.99, 0.90, 710.00, 185.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (7, 40.50, 1.35, 700.00, 197.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (8, 41.99, 1.60, 680.00, 212.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (9, 45.95, 1.35, 720.00, 202.00);
+--INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (10, 50.99, 1.40, 750.00, 233.00);
