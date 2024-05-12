@@ -1,3 +1,132 @@
+CREATE TABLE "Cennik" (
+  "id" NUMBER(10),
+  "kwota_za_dzien" NUMBER(6,2) NOT NULL,
+  "kwota_za_kilometr" NUMBER(6,2) NOT NULL,
+  "kaucja" NUMBER(6,2) NOT NULL,
+  "kara" NUMBER(6,2) NOT NULL,
+  PRIMARY KEY ("id")
+);
+
+CREATE TABLE "Ubezpieczenie" (
+  "id" NUMBER(10),
+  "rodzaj_ubezpieczenia" VARCHAR2(25) NOT NULL,
+  "kwota_pokrycia" NUMBER(6,2),
+  "skladka" NUMBER(6,2),
+  PRIMARY KEY ("id")
+);
+
+CREATE TABLE "Adres" (
+  "id" NUMBER(10),
+  "kod_pocztowy" VARCHAR2(6) NOT NULL,
+  "miejscowosc" VARCHAR2(50) NOT NULL,
+  "ulica" VARCHAR2(50) NOT NULL,
+  "nr_domu" NUMBER(5) NOT NULL,
+  "nr_lokalu" NUMBER(10),
+  PRIMARY KEY ("id")
+);
+
+CREATE TABLE "Klienci" (
+  "id" NUMBER(10),
+  "imie" VARCHAR2(50) NOT NULL,
+  "nazwisko" VARCHAR2(50) NOT NULL,
+  "id_adresu" NUMBER(10) NOT NULL,
+  "nr_dowodu" VARCHAR2(9) NOT NULL,
+  "pesel" VARCHAR2(11) NOT NULL,
+  PRIMARY KEY ("id"),
+  CONSTRAINT "FK_Klienci_id_adresu"
+    FOREIGN KEY ("id_adresu")
+      REFERENCES "Adres"("id")
+);
+CREATE TABLE "Dane_techniczne" (
+  "id" NUMBER(10),
+-- "id_pojazdu" NUMBER(10) NOT NULL,
+  "pojemnosc_silnika" NUMBER(4) NOT NULL,
+  "moc_silnika" NUMBER(3) NOT NULL,
+  "rodzaj_paliwa" VARCHAR2(10),
+  "gaz" CHAR(1),
+  "stan_licznika" NUMBER(6) NOT NULL,
+  PRIMARY KEY ("id")
+--  CONSTRAINT "FK_Dane_techniczne_id_pojazdu"
+--    FOREIGN KEY ("id_pojazdu")
+--     REFERENCES "Pojazd"("id")
+);
+CREATE TABLE "Pojazd" (
+  "id" NUMBER(10),
+  "Marka" VARCHAR2(25) NOT NULL,
+  "Model" VARCHAR2(25) NOT NULL,
+  "Rok_produkcji" NUMBER(4),
+  "Kolor" VARCHAR2(25),
+  "id_dane_techniczne" NUMBER(10) NOT NULL,
+  "typ_pojazdu" VARCHAR2(25),
+  "dostepny" CHAR(1),
+  "numer_VIN" VARCHAR2(17) NOT NULL,
+  PRIMARY KEY ("id"),
+  CONSTRAINT "FK_Pojazd_id_dane_techniczne"
+    FOREIGN KEY ("id_dane_techniczne")
+      REFERENCES "Dane_techniczne"("id")
+);
+
+CREATE TABLE "Umowy_wypozyczenia" (
+  "id" NUMBER(10),
+  "id_pojazdu" NUMBER(10) NOT NULL,
+  "id_klienta" NUMBER(10) NOT NULL,
+  "id_ubezpieczenia" NUMBER(10) NOT NULL,
+  "data_wypozyczenia" DATE,
+  "data_oddania" DATE,
+  PRIMARY KEY ("id"),
+  CONSTRAINT "FK_Umowy_wypozyczenia_id_klienta"
+    FOREIGN KEY ("id_klienta")
+      REFERENCES "Klienci"("id"),
+  CONSTRAINT "FK_Umowy_wypozyczenia_id_ubezpieczenia"
+    FOREIGN KEY ("id_ubezpieczenia")
+      REFERENCES "Ubezpieczenie"("id"),
+  CONSTRAINT "FK_Umowy_wypozyczenia_id_pojazdu"
+    FOREIGN KEY ("id_pojazdu")
+      REFERENCES "Pojazd"("id")
+);
+
+
+
+CREATE TABLE "Forma_platnosci" (
+  "id" NUMBER(10),
+  "id_umowy" NUMBER(10),
+  "rodzaj_platnosci" VARCHAR2(25),
+  "nr_karty" NUMBER(19) NOT NULL,
+  "data_wygasniecia_karty" DATE NOT NULL,
+  "CVV" NUMBER(4) NOT NULL,
+  PRIMARY KEY ("id"),
+  CONSTRAINT "FK_Forma_platnosci_id_umowy"
+    FOREIGN KEY ("id_umowy")
+      REFERENCES "Umowy_wypozyczenia"("id")
+);
+
+CREATE TABLE "Zwroty" (
+  "id" NUMBER(10),
+  "id_umowy" NUMBER(10) NOT NULL,
+  "data_oddania" DATE NOT NULL,
+  "stan_licznika_po" NUMBER(6) NOT NULL,
+  PRIMARY KEY ("id"),
+  CONSTRAINT "FK_Zwroty_id_umowy"
+    FOREIGN KEY ("id_umowy")
+      REFERENCES "Umowy_wypozyczenia"("id")
+);
+
+CREATE TABLE "Historia" (
+  "id" NUMBER(10),
+  "id_cennik" NUMBER(10) NOT NULL,
+  "id_pojazd" NUMBER(10) NOT NULL,
+  "od" DATE,
+  "do" DATE,
+  PRIMARY KEY ("id"),
+  CONSTRAINT "FK_Historia_id_pojazd"
+    FOREIGN KEY ("id_pojazd")
+      REFERENCES "Pojazd"("id"),
+  CONSTRAINT "FK_Historia_id_cennik"
+    FOREIGN KEY ("id_cennik")
+      REFERENCES "Cennik"("id")
+);
+
+--Dane do Cennika--
 INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (1, 45.00, 1.50, 700.00, 200.00);
 INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (2, 50.00, 1.70, 800.00, 220.00);
 INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (3, 39.00, 1.45, 720.00, 190.00);
@@ -8,3 +137,167 @@ INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr",
 INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (8, 41.99, 1.60, 680.00, 212.00);
 INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (9, 45.95, 1.35, 720.00, 202.00);
 INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (10, 50.99, 1.40, 750.00, 233.00);
+
+--Dane do Ubezpieczeń--
+INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (1, 'OC', 4000.00, 500.00);
+INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (2, 'AC', 3000.00, 700.00);
+INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (3, 'Auto', 9000.00, 600.00);
+INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (4, 'Assistance', 3000.00, 150.00);
+INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (5, 'NNW', 5000.00, 300.00);
+INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (6, 'OC+AC', 7000.00, 1200.00);
+
+
+--Dane do Adresów--
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (1, '01-001', 'Warszawa', 'Aleje Jerozolimskie', 10, NULL);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (2, '02-002', 'Kraków', 'Rynek Główny', 15, NULL);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (3, '03-003', 'Gdańsk', 'ul. Długa', 20, 5);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (4, '04-004', 'Wrocław', 'Plac Solny', 30, NULL);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (5, '05-005', 'Poznań', 'ul. Wielka', 40, NULL);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (6, '06-006', 'Łódź', 'ul. Piotrkowska', 50, 2);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (7, '07-007', 'Szczecin', 'ul. Małeckiego', 60, NULL);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (8, '08-008', 'Katowice', 'ul. Warszawska', 70, 3);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (9, '09-009', 'Gdynia', 'ul. Starowiejska', 80, NULL);
+INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (10, '10-010', 'Bydgoszcz', 'ul. Dworcowa', 90, 1);
+
+--Dane do Klijentów--
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (1, 'Jan', 'Kowalski', 1, 'ABC123456', '12345678901');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (2, 'Anna', 'Nowak', 2, 'DEF654321', '23456789012');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (3, 'Piotr', 'Wiśniewski', 3, 'GHI987654', '34567890123');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (4, 'Maria', 'Dąbrowska', 4, 'JKL123456', '45678901234');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (5, 'Adam', 'Lewandowski', 5, 'MNO654321', '56789012345');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (6, 'Alicja', 'Wójcik', 6, 'PQR987654', '67890123456');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (7, 'Marek', 'Kamiński', 7, 'STU123456', '78901234567');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (8, 'Ewa', 'Zielińska', 8, 'VWX654321', '89012345678');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (9, 'Tomasz', 'Kowalczyk', 9, 'YZA987654', '90123456789');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (10, 'Karolina', 'Woźniak', 10, 'BCD123456', '01234567890');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (11, 'Katarzyna', 'Jankowska', 1, 'EFG123456', '12345678910');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (12, 'Robert', 'Wojciechowski', 2, 'HIJ654321', '23456789101');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (13, 'Monika', 'Krawczyk', 3, 'KLM987654', '34567891012');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (14, 'Łukasz', 'Witkowski', 4, 'NOP123456', '45678910123');
+INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (15, 'Magdalena', 'Zając', 5, 'QRS654321', '56789101234');
+
+--Dane do Dane_techniczne--
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (1, 1600, 110, 'Benzyna', 'N', 50000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (2, 1500, 120, 'Benzyna', 'N', 40000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (3, 2000, 140, 'Benzyna', 'N', 30000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (4, 1800, 130, 'Benzyna', 'N', 45000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (5, 2000, 150, 'Benzyna', 'N', 60000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (6, 300, 40, 'Benzyna', 'N', 20000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (7, 600, 120, 'Benzyna', 'N', 15000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (8, 900, 60, 'Benzyna', 'N', 18000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (9, 1000, 200, 'Benzyna', 'N', 10000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (10, 1100, 220, 'Benzyna', 'N', 12000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (11, 2000, 150, 'Benzyna', 'N', 70000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (12, 1800, 140, 'Benzyna', 'N', 60000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (13, 1600, 130, 'Benzyna', 'N', 50000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (14, 1400, 120, 'Benzyna', 'N', 40000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (15, 1200, 110, 'Benzyna', 'N', 30000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (16, 1800, 100, 'Benzyna', 'N', 20000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (17, 400, 45, 'Benzyna', 'N', 15000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (18, 1250, 135, 'Benzyna', 'N', 10000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (19, 800, 90, 'Benzyna', 'N', 8000);
+INSERT INTO "BAZY_DANYCH"."Dane_techniczne" ("id", "pojemnosc_silnika", "moc_silnika", "rodzaj_paliwa", "gaz", "stan_licznika") VALUES (20, 700, 75, 'Benzyna', 'N', 6000);
+
+--Dane do Pojazdy--
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (1, 'Toyota', 'Corolla', 2018, 'Czerwony', 1, 'Samochód', 'T', 'JTDKB20U987654321');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (2, 'Ford', 'Focus', 2019, 'Czarny', 2, 'Samochód', 'T', '1FADP3E27EL123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (3, 'Volkswagen', 'Golf', 2020, 'Biały', 3, 'Samochód', 'T', 'WVWZZZ1JZ2W123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (4, 'Honda', 'Civic', 2017, 'Srebrny', 4, 'Samochód', 'T', 'SHHFK7H44U1234567');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (5, 'BMW', '3 Series', 2016, 'Niebieski', 5, 'Samochód', 'T', 'WBA3N5C50EF712345');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (6, 'Kawasaki', 'Ninja 300', 2020, 'Czarny', 6, 'Motocykl', 'T', 'JKAEX8A15FDA12345');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (7, 'Yamaha', 'YZF-R6', 2019, 'Żółty', 7, 'Motocykl', 'T', 'JYARJ16E77A123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (8, 'Harley-Davidson', 'Sportster Iron 883', 2018, 'Czarny', 8, 'Motocykl', 'T', '1HD1LE21YJC123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (9, 'Suzuki', 'GSX-R1000', 2021, 'Niebieski', 9, 'Motocykl', 'T', 'JS1DM11B9M1234567');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (10,'Ducati', 'Panigale V4', 2020, 'Czerwony', 10, 'Motocykl', 'T', 'ZDMH602AABCD12345');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (11,'Audi', 'A4', 2017, 'Czarny', 11, 'Samochód', 'T', 'WAUZZZF44HN123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (12,'Mercedes-Benz', 'C-Class', 2018, 'Srebrny', 12, 'Samochód', 'T', 'WDDGF8BB0AF123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (13,'Volvo', 'S60', 2019, 'Czerwony', 13, 'Samochód', 'T', 'YV1FS84D1B1234567');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (14,'Peugeot', '308', 2020, 'Biały', 14, 'Samochód', 'T', 'YV1FS84D1B1234567');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (15,'Opel', 'Astra', 2021, 'Niebieski', 15, 'Samochód', 'T', 'W0L0*************');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (16,'Harley-Davidson', 'Street Glide', 2017, 'Czarny', 16, 'Motocykl', 'T', '1HD1KB419BB123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (17,'KTM', 'Duke 390', 2018, 'Pomarańczowy', 17, 'Motocykl', 'T', 'MD2**************');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (18,'BMW', 'R 1250 GS Adventure', 2019, 'Żółty', 18, 'Motocykl', 'T', 'WB10K130*HZ123456');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (19,'Ducati', 'Monster 821', 2020, 'Czerwony', 19, 'Motocykl', 'T', 'ZDMC*************');
+INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (20,'Yamaha', 'MT-07', 2021, 'Zielony', 20, 'Motocykl', 'T', 'JYARM03E4MA123456');
+
+--Dane do Umowy_wypozyczenia--
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (1, 1, 1, 1,TO_DATE('2024-05-12', 'YYYY-MM-DD'), TO_DATE('2024-05-20', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (2, 6, 2, 2,TO_DATE('2024-05-15', 'YYYY-MM-DD'), TO_DATE('2024-05-22', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (3, 11, 3, 3,TO_DATE('2024-05-18', 'YYYY-MM-DD'), TO_DATE('2024-05-25', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (4, 16, 4, 4,TO_DATE('2024-05-20', 'YYYY-MM-DD'), TO_DATE('2024-05-27', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (5, 20, 5, 5,TO_DATE('2024-05-22', 'YYYY-MM-DD'), TO_DATE('2024-05-29', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (6, 2, 6, 6, TO_DATE('2024-05-25', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (7, 7, 7, 1, TO_DATE('2024-05-28', 'YYYY-MM-DD'), TO_DATE('2024-06-05', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (8, 12, 8, 2, TO_DATE('2024-05-30', 'YYYY-MM-DD'), TO_DATE('2024-06-07', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (9, 17, 9, 3, TO_DATE('2024-06-02', 'YYYY-MM-DD'), TO_DATE('2024-06-09', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (10, 3, 10, 4, TO_DATE('2024-06-05', 'YYYY-MM-DD'), TO_DATE('2024-06-12', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (11, 8, 11, 5, TO_DATE('2024-06-08', 'YYYY-MM-DD'), TO_DATE('2024-06-15', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (12, 13, 12, 6, TO_DATE('2024-06-10', 'YYYY-MM-DD'), TO_DATE('2024-06-17', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (13, 18, 13, 2, TO_DATE('2024-06-12', 'YYYY-MM-DD'), TO_DATE('2024-06-19', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (14, 4, 14, 4, TO_DATE('2024-06-15', 'YYYY-MM-DD'), TO_DATE('2024-06-22', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (15, 9, 15, 5, TO_DATE('2024-06-18', 'YYYY-MM-DD'), TO_DATE('2024-06-25', 'YYYY-MM-DD'));
+
+--Dane do Form_płatności--
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (1, 1, 'Całość', 1234567812345678, TO_DATE('2030-12-01', 'YYYY-MM-DD'), 123);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (2, 2, 'Całość', 2345678923456789, TO_DATE('2031-01-01', 'YYYY-MM-DD'), 234);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (3, 3, 'Całość', 3456789034567890, TO_DATE('2032-02-01', 'YYYY-MM-DD'), 345);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (4, 4, 'Całość', 4567890145678901, TO_DATE('2033-03-01', 'YYYY-MM-DD'), 456);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (5, 5, 'Całość', 5678901256789012, TO_DATE('2034-04-01', 'YYYY-MM-DD'), 567);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (6, 6, 'Całość', 6789012367890123, TO_DATE('2035-05-01', 'YYYY-MM-DD'), 678);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (7, 7, 'Całość', 7890123478901234, TO_DATE('2030-06-01', 'YYYY-MM-DD'), 789);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (8, 8, 'Całość', 8901234589012345, TO_DATE('2031-07-01', 'YYYY-MM-DD'), 890);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (9, 9, 'Całość', 9012345690123456, TO_DATE('2032-08-01', 'YYYY-MM-DD'), 901);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (10, 10, 'Całość', 1234567812345678, TO_DATE('2033-09-01', 'YYYY-MM-DD'), 123);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (11, 11, 'Całość', 2345678923456789, TO_DATE('2034-10-01', 'YYYY-MM-DD'), 234);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (12, 12, 'Całość', 3456789034567890, TO_DATE('2035-11-01', 'YYYY-MM-DD'), 345);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (13, 13, 'Całość', 4567890145678901, TO_DATE('2030-12-01', 'YYYY-MM-DD'), 456);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (14, 14, 'Całość', 5678901256789012, TO_DATE('2031-01-01', 'YYYY-MM-DD'), 567);
+INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (15, 15, 'Całość', 6789012367890123, TO_DATE('2032-02-01', 'YYYY-MM-DD'), 678);
+
+--Dane do Zwroty--
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (1, 1, TO_DATE('2024-05-20', 'YYYY-MM-DD'), 12000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (2, 2, TO_DATE('2024-05-22', 'YYYY-MM-DD'), 15000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (3, 3, TO_DATE('2024-05-25', 'YYYY-MM-DD'), 18000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (4, 4, TO_DATE('2024-05-27', 'YYYY-MM-DD'), 20000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (5, 5, TO_DATE('2024-05-29', 'YYYY-MM-DD'), 22000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (6, 6, TO_DATE('2024-06-01', 'YYYY-MM-DD'), 24000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (7, 7, TO_DATE('2024-06-05', 'YYYY-MM-DD'), 27000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (8, 8, TO_DATE('2024-06-07', 'YYYY-MM-DD'), 30000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (9, 9, TO_DATE('2024-06-09', 'YYYY-MM-DD'), 32000);
+INSERT INTO "BAZY_DANYCH"."Zwroty" ("id", "id_umowy", "data_oddania", "stan_licznika_po") VALUES (10, 10, TO_DATE('2024-06-12', 'YYYY-MM-DD'), 35000);
+
+--Dane do Historia--
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (1, 1, 1, NULL, TO_DATE('2024-06-01', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (2, 2, 2, TO_DATE('2024-05-15', 'YYYY-MM-DD'), NULL);
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (3, 3, 3, NULL, TO_DATE('2024-06-10', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (4, 4, 4, TO_DATE('2024-05-20', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (5, 5, 5, NULL, TO_DATE('2024-06-05', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (6, 6, 6, TO_DATE('2024-05-25', 'YYYY-MM-DD'), NULL);
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (7, 7, 7, NULL, TO_DATE('2024-06-12', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (8, 8, 8, TO_DATE('2024-05-30', 'YYYY-MM-DD'), TO_DATE('2024-06-05', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (9, 9, 9, NULL, TO_DATE('2024-06-15', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (10, 10, 10, TO_DATE('2024-06-01', 'YYYY-MM-DD'), NULL);
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (11, 1, 11, NULL, TO_DATE('2024-06-01', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (12, 2, 12, TO_DATE('2024-05-15', 'YYYY-MM-DD'), NULL);
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (13, 3, 13, NULL, TO_DATE('2024-06-10', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (14, 4, 14, TO_DATE('2024-05-20', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (15, 5, 15, NULL, TO_DATE('2024-06-05', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (16, 6, 16, TO_DATE('2024-05-25', 'YYYY-MM-DD'), NULL);
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (17, 7, 17, NULL, TO_DATE('2024-06-12', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (18, 8, 18, TO_DATE('2024-05-30', 'YYYY-MM-DD'), TO_DATE('2024-06-05', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (19, 9, 19, NULL, TO_DATE('2024-06-15', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (20, 10, 20, TO_DATE('2024-06-01', 'YYYY-MM-DD'), NULL);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
