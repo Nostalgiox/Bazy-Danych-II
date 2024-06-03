@@ -83,8 +83,8 @@ CREATE TABLE "Umowy_wypozyczenia" (
   CONSTRAINT "FK_Umowy_wypozyczenia_id_pojazdu"
     FOREIGN KEY ("id_pojazdu")
       REFERENCES "Pojazd"("id")
+      ON DELETE CASCADE
 );
-
 
 
 CREATE TABLE "Forma_platnosci" (
@@ -98,6 +98,7 @@ CREATE TABLE "Forma_platnosci" (
   CONSTRAINT "FK_Forma_platnosci_id_umowy"
     FOREIGN KEY ("id_umowy")
       REFERENCES "Umowy_wypozyczenia"("id")
+      ON DELETE CASCADE
 );
 
 CREATE TABLE "Zwroty" (
@@ -109,6 +110,7 @@ CREATE TABLE "Zwroty" (
   CONSTRAINT "FK_Zwroty_id_umowy"
     FOREIGN KEY ("id_umowy")
       REFERENCES "Umowy_wypozyczenia"("id")
+      ON DELETE CASCADE
 );
 
 CREATE TABLE "Historia" (
@@ -120,7 +122,8 @@ CREATE TABLE "Historia" (
   PRIMARY KEY ("id"),
   CONSTRAINT "FK_Historia_id_pojazd"
     FOREIGN KEY ("id_pojazd")
-      REFERENCES "Pojazd"("id"),
+      REFERENCES "Pojazd"("id")
+      ON DELETE CASCADE,
   CONSTRAINT "FK_Historia_id_cennik"
     FOREIGN KEY ("id_cennik")
       REFERENCES "Cennik"("id")

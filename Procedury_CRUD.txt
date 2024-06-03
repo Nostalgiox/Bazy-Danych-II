@@ -291,7 +291,12 @@ CREATE OR REPLACE PROCEDURE usun_dane_techniczne (
     p_id IN "Dane_techniczne"."id"%TYPE
 ) AS
 BEGIN
+    -- Usuń rekordy zależne w tabeli Pojazd
+    DELETE FROM "Pojazd" WHERE "id_dane_techniczne" = p_id;
+    
+    -- Usuń dane techniczne
     DELETE FROM "Dane_techniczne" WHERE "id" = p_id;
+    
     COMMIT;
 END usun_dane_techniczne;
 
@@ -369,13 +374,25 @@ BEGIN
     WHERE "id" = p_id;
     COMMIT;
 END aktualizuj_pojazd;
+
 CREATE OR REPLACE PROCEDURE usun_pojazd (
     p_id IN "Pojazd"."id"%TYPE
 ) AS
 BEGIN
+    -- Usuń rekordy zależne w tabeli Historia
+    DELETE FROM "Historia" WHERE "id_pojazd" = p_id;
+    
+    -- Usuń rekordy zależne w tabeli Umowy_wypozyczenia i powiązanych tabelach Zwroty oraz Forma_platnosci
+    DELETE FROM "Zwroty" WHERE "id_umowy" IN (SELECT "id" FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id);
+    DELETE FROM "Forma_platnosci" WHERE "id_umowy" IN (SELECT "id" FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id);
+    DELETE FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id;
+    
+    -- Usuń pojazd
     DELETE FROM "Pojazd" WHERE "id" = p_id;
+    
     COMMIT;
 END usun_pojazd;
+
 CREATE OR REPLACE FUNCTION odczytaj_pojazd (
     p_id IN "Pojazd"."id"%TYPE
 ) RETURN SYS_REFCURSOR AS
