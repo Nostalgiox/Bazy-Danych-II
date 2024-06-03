@@ -1,0 +1,392 @@
+--Ubezpieczenie CREATE
+CREATE SEQUENCE Ubezpieczenie_seq;
+CREATE OR REPLACE PROCEDURE dodaj_ubezpieczenie (
+    p_rodzaj_ubezpieczenia IN "Ubezpieczenie"."rodzaj_ubezpieczenia"%TYPE,
+    p_kwota_pokrycia IN "Ubezpieczenie"."kwota_pokrycia"%TYPE,
+    p_skladka IN "Ubezpieczenie"."skladka"%TYPE
+) AS
+BEGIN
+    INSERT INTO "Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka")
+    VALUES (Ubezpieczenie_seq.NEXTVAL, p_rodzaj_ubezpieczenia, p_kwota_pokrycia, p_skladka);
+    COMMIT;
+END dodaj_ubezpieczenie;
+/
+
+--Ubezpieczenie READ
+CREATE OR REPLACE FUNCTION odczytaj_ubezpieczenie (
+    p_id IN Ubezpieczenie.id%TYPE
+) RETURN SYS_REFCURSOR AS
+    ubezpieczenie_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN ubezpieczenie_cursor FOR
+        SELECT id, rodzaj_ubezpieczenia, kwota_pokrycia, skladka
+        FROM Ubezpieczenie
+        WHERE id = p_id;
+    RETURN ubezpieczenie_cursor;
+END;
+/
+
+--Ubezpieczenie UPDATE
+CREATE OR REPLACE PROCEDURE aktualizuj_ubezpieczenie (
+    p_id IN "Ubezpieczenie"."id"%TYPE,
+    p_rodzaj_ubezpieczenia IN "Ubezpieczenie"."rodzaj_ubezpieczenia"%TYPE,
+    p_kwota_pokrycia IN "Ubezpieczenie"."kwota_pokrycia"%TYPE,
+    p_skladka IN "Ubezpieczenie"."skladka"%TYPE
+) AS
+BEGIN
+    UPDATE "Ubezpieczenie" 
+    SET "rodzaj_ubezpieczenia" = p_rodzaj_ubezpieczenia,
+        "kwota_pokrycia" = p_kwota_pokrycia,
+        "skladka" = p_skladka
+    WHERE "id" = p_id;
+    COMMIT;
+END aktualizuj_ubezpieczenie;
+/
+
+--Ubezpieczenie DELETE
+CREATE OR REPLACE PROCEDURE usun_ubezpieczenie (
+    p_id IN "Ubezpieczenie"."id"%TYPE
+) AS
+BEGIN
+    DELETE FROM "Ubezpieczenie" WHERE "id" = p_id;
+    COMMIT;
+END usun_ubezpieczenie;
+/
+
+
+
+
+
+
+
+CREATE SEQUENCE "Cennik_seq"
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+--Cennik CREATE
+CREATE OR REPLACE PROCEDURE "dodaj_cennik" (
+    p_kwota_za_dzien IN "Cennik"."kwota_za_dzien"%TYPE,
+    p_kwota_za_kilometr IN "Cennik"."kwota_za_kilometr"%TYPE,
+    p_kaucja IN "Cennik"."kaucja"%TYPE,
+    p_kara IN "Cennik"."kara"%TYPE
+) AS
+BEGIN
+    INSERT INTO "Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara")
+    VALUES ("Cennik_seq".NEXTVAL, p_kwota_za_dzien, p_kwota_za_kilometr, p_kaucja, p_kara);
+    COMMIT;
+END "dodaj_cennik";
+/
+--Cennik SELECT
+CREATE OR REPLACE FUNCTION "odczytaj_cennik" (
+    p_id IN "Cennik"."id"%TYPE
+) RETURN "Cennik"%ROWTYPE AS
+    v_cennik "Cennik"%ROWTYPE;
+BEGIN
+    SELECT * INTO v_cennik FROM "Cennik" WHERE "id" = p_id;
+    RETURN v_cennik;
+END "odczytaj_cennik";
+/
+--Cennik UPDATE
+CREATE OR REPLACE PROCEDURE "aktualizuj_cennik" (
+    p_id IN "Cennik"."id"%TYPE,
+    p_kwota_za_dzien IN "Cennik"."kwota_za_dzien"%TYPE,
+    p_kwota_za_kilometr IN "Cennik"."kwota_za_kilometr"%TYPE,
+    p_kaucja IN "Cennik"."kaucja"%TYPE,
+    p_kara IN "Cennik"."kara"%TYPE
+) AS
+BEGIN
+    UPDATE "Cennik"
+    SET "kwota_za_dzien" = p_kwota_za_dzien,
+        "kwota_za_kilometr" = p_kwota_za_kilometr,
+        "kaucja" = p_kaucja,
+        "kara" = p_kara
+    WHERE "id" = p_id;
+    COMMIT;
+END "aktualizuj_cennik";
+/
+--Cennik DELETE
+CREATE OR REPLACE PROCEDURE "usun_cennik" (
+    p_id IN "Cennik"."id"%TYPE
+) AS
+BEGIN
+    DELETE FROM "Cennik" WHERE "id" = p_id;
+    COMMIT;
+END "usun_cennik";
+/
+--Cennik zwraca wszystkie rekordy w tabeli
+CREATE OR REPLACE FUNCTION "odczytaj_wszystkie_cenniki"
+RETURN SYS_REFCURSOR AS
+    v_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN v_cursor FOR SELECT * FROM "Cennik";
+    RETURN v_cursor;
+END "odczytaj_wszystkie_cenniki";
+/
+
+
+
+
+
+
+
+CREATE SEQUENCE Adres_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE Klienci_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE PROCEDURE dodaj_adres (
+    p_kod_pocztowy IN "Adres"."kod_pocztowy"%TYPE,
+    p_miejscowosc IN "Adres"."miejscowosc"%TYPE,
+    p_ulica IN "Adres"."ulica"%TYPE,
+    p_nr_domu IN "Adres"."nr_domu"%TYPE,
+    p_nr_lokalu IN "Adres"."nr_lokalu"%TYPE
+) AS
+BEGIN
+    INSERT INTO "Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu")
+    VALUES (Adres_seq.NEXTVAL, p_kod_pocztowy, p_miejscowosc, p_ulica, p_nr_domu, p_nr_lokalu);
+    COMMIT;
+END dodaj_adres;
+
+CREATE OR REPLACE FUNCTION odczytaj_wszystkie_adresy RETURN SYS_REFCURSOR AS
+    c_adres SYS_REFCURSOR;
+BEGIN
+    OPEN c_adres FOR SELECT * FROM "Adres";
+    RETURN c_adres;
+END odczytaj_wszystkie_adresy;
+
+CREATE OR REPLACE PROCEDURE aktualizuj_adres (
+    p_id IN "Adres"."id"%TYPE,
+    p_kod_pocztowy IN "Adres"."kod_pocztowy"%TYPE,
+    p_miejscowosc IN "Adres"."miejscowosc"%TYPE,
+    p_ulica IN "Adres"."ulica"%TYPE,
+    p_nr_domu IN "Adres"."nr_domu"%TYPE,
+    p_nr_lokalu IN "Adres"."nr_lokalu"%TYPE
+) AS
+BEGIN
+    UPDATE "Adres"
+    SET "kod_pocztowy" = p_kod_pocztowy,
+        "miejscowosc" = p_miejscowosc,
+        "ulica" = p_ulica,
+        "nr_domu" = p_nr_domu,
+        "nr_lokalu" = p_nr_lokalu
+    WHERE "id" = p_id;
+    COMMIT;
+END aktualizuj_adres;
+
+CREATE OR REPLACE PROCEDURE usun_adres (
+    p_id IN "Adres"."id"%TYPE
+) AS
+BEGIN
+    DELETE FROM "Adres" WHERE "id" = p_id;
+    COMMIT;
+END usun_adres;
+
+
+
+CREATE OR REPLACE PROCEDURE dodaj_klienta (
+    p_imie IN "Klienci"."imie"%TYPE,
+    p_nazwisko IN "Klienci"."nazwisko"%TYPE,
+    p_id_adresu IN "Klienci"."id_adresu"%TYPE,
+    p_nr_dowodu IN "Klienci"."nr_dowodu"%TYPE,
+    p_pesel IN "Klienci"."pesel"%TYPE
+) AS
+BEGIN
+    INSERT INTO "Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel")
+    VALUES (Klienci_seq.NEXTVAL, p_imie, p_nazwisko, p_id_adresu, p_nr_dowodu, p_pesel);
+    COMMIT;
+END dodaj_klienta;
+
+CREATE OR REPLACE FUNCTION odczytaj_wszystkich_klientow RETURN SYS_REFCURSOR AS
+    c_klienci SYS_REFCURSOR;
+BEGIN
+    OPEN c_klienci FOR SELECT * FROM "Klienci";
+    RETURN c_klienci;
+END odczytaj_wszystkich_klientow;
+
+CREATE OR REPLACE PROCEDURE aktualizuj_klienta (
+    p_id IN "Klienci"."id"%TYPE,
+    p_imie IN "Klienci"."imie"%TYPE,
+    p_nazwisko IN "Klienci"."nazwisko"%TYPE,
+    p_id_adresu IN "Klienci"."id_adresu"%TYPE,
+    p_nr_dowodu IN "Klienci"."nr_dowodu"%TYPE,
+    p_pesel IN "Klienci"."pesel"%TYPE
+) AS
+BEGIN
+    UPDATE "Klienci"
+    SET "imie" = p_imie,
+        "nazwisko" = p_nazwisko,
+        "id_adresu" = p_id_adresu,
+        "nr_dowodu" = p_nr_dowodu,
+        "pesel" = p_pesel
+    WHERE "id" = p_id;
+    COMMIT;
+END aktualizuj_klienta;
+
+CREATE OR REPLACE PROCEDURE usun_klienta (
+    p_id IN "Klienci"."id"%TYPE
+) AS
+BEGIN
+    DELETE FROM "Klienci" WHERE "id" = p_id;
+    COMMIT;
+END usun_klienta;
+
+
+
+
+
+
+
+
+
+
+CREATE SEQUENCE Dane_techniczne_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+CREATE OR REPLACE PROCEDURE dodaj_dane_techniczne (
+    p_pojemnosc_silnika IN "Dane_techniczne"."pojemnosc_silnika"%TYPE,
+    p_moc_silnika IN "Dane_techniczne"."moc_silnika"%TYPE,
+    p_rodzaj_paliwa IN "Dane_techniczne"."rodzaj_paliwa"%TYPE,
+    p_gaz IN "Dane_techniczne"."gaz"%TYPE,
+    p_stan_licznika IN "Dane_techniczne"."stan_licznika"%TYPE
+) AS
+BEGIN
+    INSERT INTO "Dane_techniczne" (
+        "id", 
+        "pojemnosc_silnika", 
+        "moc_silnika", 
+        "rodzaj_paliwa", 
+        "gaz", 
+        "stan_licznika"
+    ) VALUES (
+        Dane_techniczne_seq.NEXTVAL, 
+        p_pojemnosc_silnika, 
+        p_moc_silnika, 
+        p_rodzaj_paliwa, 
+        p_gaz, 
+        p_stan_licznika
+    );
+    COMMIT;
+END dodaj_dane_techniczne;
+
+CREATE OR REPLACE PROCEDURE aktualizuj_dane_techniczne (
+    p_id IN "Dane_techniczne"."id"%TYPE,
+    p_pojemnosc_silnika IN "Dane_techniczne"."pojemnosc_silnika"%TYPE,
+    p_moc_silnika IN "Dane_techniczne"."moc_silnika"%TYPE,
+    p_rodzaj_paliwa IN "Dane_techniczne"."rodzaj_paliwa"%TYPE,
+    p_gaz IN "Dane_techniczne"."gaz"%TYPE,
+    p_stan_licznika IN "Dane_techniczne"."stan_licznika"%TYPE
+) AS
+BEGIN
+    UPDATE "Dane_techniczne" 
+    SET "pojemnosc_silnika" = p_pojemnosc_silnika,
+        "moc_silnika" = p_moc_silnika,
+        "rodzaj_paliwa" = p_rodzaj_paliwa,
+        "gaz" = p_gaz,
+        "stan_licznika" = p_stan_licznika
+    WHERE "id" = p_id;
+    COMMIT;
+END aktualizuj_dane_techniczne;
+
+CREATE OR REPLACE PROCEDURE usun_dane_techniczne (
+    p_id IN "Dane_techniczne"."id"%TYPE
+) AS
+BEGIN
+    DELETE FROM "Dane_techniczne" WHERE "id" = p_id;
+    COMMIT;
+END usun_dane_techniczne;
+
+CREATE OR REPLACE FUNCTION odczytaj_dane_techniczne (
+    p_id IN "Dane_techniczne"."id"%TYPE
+) RETURN "Dane_techniczne"%ROWTYPE AS
+    dane_techniczne "Dane_techniczne"%ROWTYPE;
+BEGIN
+    SELECT * INTO dane_techniczne FROM "Dane_techniczne" WHERE "id" = p_id;
+    RETURN dane_techniczne;
+END odczytaj_dane_techniczne;
+
+
+
+
+CREATE SEQUENCE "Pojazd_seq"
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+CREATE OR REPLACE PROCEDURE dodaj_pojazd (
+    p_Marka IN "Pojazd"."Marka"%TYPE,
+    p_Model IN "Pojazd"."Model"%TYPE,
+    p_Rok_produkcji IN "Pojazd"."Rok_produkcji"%TYPE,
+    p_Kolor IN "Pojazd"."Kolor"%TYPE,
+    p_id_dane_techniczne IN "Pojazd"."id_dane_techniczne"%TYPE,
+    p_typ_pojazdu IN "Pojazd"."typ_pojazdu"%TYPE,
+    p_dostepny IN "Pojazd"."dostepny"%TYPE,
+    p_numer_VIN IN "Pojazd"."numer_VIN"%TYPE
+) AS
+BEGIN
+    INSERT INTO "Pojazd" (
+        "id", 
+        "Marka", 
+        "Model", 
+        "Rok_produkcji", 
+        "Kolor", 
+        "id_dane_techniczne", 
+        "typ_pojazdu", 
+        "dostepny", 
+        "numer_VIN"
+    ) VALUES (
+        "Pojazd_seq".NEXTVAL, 
+        p_Marka, 
+        p_Model, 
+        p_Rok_produkcji, 
+        p_Kolor, 
+        p_id_dane_techniczne, 
+        p_typ_pojazdu, 
+        p_dostepny, 
+        p_numer_VIN
+    );
+    COMMIT;
+END dodaj_pojazd;
+CREATE OR REPLACE PROCEDURE aktualizuj_pojazd (
+    p_id IN "Pojazd"."id"%TYPE,
+    p_Marka IN "Pojazd"."Marka"%TYPE,
+    p_Model IN "Pojazd"."Model"%TYPE,
+    p_Rok_produkcji IN "Pojazd"."Rok_produkcji"%TYPE,
+    p_Kolor IN "Pojazd"."Kolor"%TYPE,
+    p_id_dane_techniczne IN "Pojazd"."id_dane_techniczne"%TYPE,
+    p_typ_pojazdu IN "Pojazd"."typ_pojazdu"%TYPE,
+    p_dostepny IN "Pojazd"."dostepny"%TYPE,
+    p_numer_VIN IN "Pojazd"."numer_VIN"%TYPE
+) AS
+BEGIN
+    UPDATE "Pojazd" 
+    SET "Marka" = p_Marka,
+        "Model" = p_Model,
+        "Rok_produkcji" = p_Rok_produkcji,
+        "Kolor" = p_Kolor,
+        "id_dane_techniczne" = p_id_dane_techniczne,
+        "typ_pojazdu" = p_typ_pojazdu,
+        "dostepny" = p_dostepny,
+        "numer_VIN" = p_numer_VIN
+    WHERE "id" = p_id;
+    COMMIT;
+END aktualizuj_pojazd;
+CREATE OR REPLACE PROCEDURE usun_pojazd (
+    p_id IN "Pojazd"."id"%TYPE
+) AS
+BEGIN
+    DELETE FROM "Pojazd" WHERE "id" = p_id;
+    COMMIT;
+END usun_pojazd;
+CREATE OR REPLACE FUNCTION odczytaj_pojazd (
+    p_id IN "Pojazd"."id"%TYPE
+) RETURN SYS_REFCURSOR AS
+    c SYS_REFCURSOR;
+BEGIN
+    OPEN c FOR
+        SELECT * FROM "Pojazd" WHERE "id" = p_id;
+    RETURN c;
+END odczytaj_pojazd;
+
+
+
+
+

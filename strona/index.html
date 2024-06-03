@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD dla tabeli Ubezpieczenie</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+<div class="container mt-5">
+  <h2 class="mb-4">CRUD dla tabeli Ubezpieczenie</h2>
+
+  <!-- Formularz do dodawania rekordów -->
+  <div class="mb-4">
+    <h4>Dodaj nowe ubezpieczenie</h4>
+    <form action="create.php" method="POST">
+      <div class="form-group">
+        <label for="rodzaj">Rodzaj ubezpieczenia:</label>
+        <input type="text" class="form-control" id="rodzaj" name="rodzaj" required>
+      </div>
+      <div class="form-group">
+        <label for="kwota">Kwota pokrycia:</label>
+        <input type="number" step="0.01" class="form-control" id="kwota" name="kwota" required>
+      </div>
+      <div class="form-group">
+        <label for="skladka">Skladka:</label>
+        <input type="number" step="0.01" class="form-control" id="skladka" name="skladka" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+  </div>
+
+  <!-- Tabela wyświetlająca rekordy -->
+  <div>
+    <h4>Lista ubezpieczeń</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Rodzaj ubezpieczenia</th>
+          <th>Kwota pokrycia</th>
+          <th>Skladka</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Tutaj będą wyświetlane rekordy z bazy danych -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
