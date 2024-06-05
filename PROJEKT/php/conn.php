@@ -15,6 +15,17 @@ if (!$conn) {
     $error = oci_error();
     die("Błąd połączenia z bazą danych: " . $error['message']);
 } 
+
+// Aktywacja triggera
+$query = 'ALTER TRIGGER sprawdz_data_oddania ENABLE';
+$stmt = oci_parse($conn, $query);
+$result = oci_execute($stmt);
+
+if (!$result) {
+    $error = oci_error($stmt);
+    die("Błąd podczas aktywowania triggera: " . $error['message']);
+}
+
 //else {
 //    echo "Połączenie z bazą danych Oracle zostało ustanowione.";
 //}

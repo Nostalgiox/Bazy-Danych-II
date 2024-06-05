@@ -88,51 +88,59 @@
             </div>
             
             <div id="layoutSidenav_content">
-                <h2>Edytuj Umowę</h2>
+                <h2>Szczegóły Umowy</h2>
                 <?php
-                require_once 'php/conn.php';
+                // Sprawdzamy czy przekazano poprawny identyfikator umowy
+                if(isset($_GET['id'])) {
+                    // Pobieramy identyfikator umowy z URL
+                    $umowa_id = $_GET['id'];
 
-                if (isset($_GET['id'])) {
-                    $id = $_GET['id'];
-                    $query = 'SELECT * FROM "Umowy_wypozyczenia" WHERE "id" = :id';
+                    // Połączenie z bazą danych
+                    require_once 'php/conn.php';
+
+                    // Zapytanie SQL do pobrania szczegółowych informacji na temat umowy
+                    $query = 'SELECT u.*, k."imie", k."nazwisko", k."pesel", p."Marka", p."Model", p."typ_pojazdu", ub."rodzaj_ubezpieczenia"
+                                FROM "Umowy_wypozyczenia" u
+                                JOIN "Klienci" k ON u."id_klienta" = k."id"
+                                JOIN "Pojazd" p ON u."id_pojazdu" = p."id"
+                                JOIN "Ubezpieczenie" ub ON u."id_ubezpieczenia" = ub."id"
+                                WHERE u."id" = :umowa_id';
+
+
+
                     $stmt = oci_parse($conn, $query);
-                    oci_bind_by_name($stmt, ':id', $id);
+                    oci_bind_by_name($stmt, ':umowa_id', $umowa_id);
                     oci_execute($stmt);
 
-                    if ($row = oci_fetch_assoc($stmt)) {
-                        ?>
-                        <form action="php/umowy/edytuj_umowe.php" method="post">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                <input type="hidden" class="form-control" id="id_pojazdu" name="id_pojazdu" value="<?php echo $row['id_pojazdu']; ?>">
-                            
-                                <input type="hidden" class="form-control" id="id_klienta" name="id_klienta" value="<?php echo $row['id_klienta']; ?>">
-                            <div class="form-group">
-                                <label for="id_ubezpieczenia">ID Ubezpieczenia:</label>
-                                <input type="number" class="form-control" id="id_ubezpieczenia" name="id_ubezpieczenia" value="<?php echo $row['id_ubezpieczenia']; ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="data_wypozyczenia">Data Wypożyczenia:</label>
-                                <input type="date" class="form-control" id="data_wypozyczenia" name="data_wypozyczenia" value="<?php echo $row['data_wypozyczenia']; ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="data_oddania">Data Oddania:</label>
-                                <input type="date" class="form-control" id="data_oddania" name="data_oddania" value="<?php echo $row['data_oddania']; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="status">Status:</label>
-                                <input type="text" class="form-control" id="status" name="status" value="<?php echo $row['status']; ?>" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-                        </form>
-                        <?php
+                    // Sprawdzamy czy umowa została znaleziona
+                    if($row = oci_fetch_assoc($stmt)) {
+                        echo '<table class="table table-bordered">';
+                        echo '<tbody>';
+                        echo '<tr><td>ID Umowy:</td><td>' . $row['id'] . '</td></tr>';
+                        echo '<tr><td>Data Wypożyczenia:</td><td>' . $row['data_wypozyczenia'] . '</td></tr>';
+                        echo '<tr><td>Data Oddania:</td><td>' . $row['data_oddania'] . '</td></tr>';
+                        echo '<tr><td>Status:</td><td>' . $row['status'] . '</td></tr>';
+                        echo '<tr><td>Stan Licznika Przed:</td><td>' . $row['stan_licznika_przed'] . '</td></tr>';
+                        echo '<tr><td>Łączna Cena:</td><td>' . $row['laczna_cena'] . '</td></tr>';
+                        echo '<tr><td>Imię Klienta:</td><td>' . $row['imie'] . '</td></tr>';
+                        echo '<tr><td>Nazwisko Klienta:</td><td>' . $row['nazwisko'] . '</td></tr>';
+                        echo '<tr><td>PESEL Klienta:</td><td>' . $row['pesel'] . '</td></tr>';
+                        echo '<tr><td>Marka Pojazdu:</td><td>' . $row['Marka'] . '</td></tr>';
+                        echo '<tr><td>Model Pojazdu:</td><td>' . $row['Model'] . '</td></tr>';
+                        echo '<tr><td>Typ pojazdu:</td><td>' . $row['typ_pojazdu'] . '</td></tr>';
+                        echo '<tr><td>Rodzaj Ubezpieczenia:</td><td>' . $row['rodzaj_ubezpieczenia'] . '</td></tr>';
+                        echo '</tbody>';
+                        echo '</table>';
                     } else {
-                        echo "Umowa o podanym ID nie została znaleziona.";
+                        echo '<p>Nie znaleziono umowy o podanym identyfikatorze.</p>';
                     }
+                    
+                    
 
                     oci_free_statement($stmt);
                     oci_close($conn);
                 } else {
-                    echo "ID umowy nie zostało przekazane.";
+                    echo '<p>Nieprawidłowy identyfikator umowy.</p>';
                 }
                 ?>
             </div>

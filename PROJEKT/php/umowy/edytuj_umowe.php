@@ -6,11 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $id_pojazdu = $_POST["id_pojazdu"];
     $id_klienta = $_POST["id_klienta"];
     $id_ubezpieczenia = $_POST["id_ubezpieczenia"];
-    $data_wypozyczenia = $_POST["data_wypozyczenia"];
-    $data_oddania = $_POST["data_oddania"];
+    $data_wypozyczenia = date('Y/m/d', strtotime($_POST["data_wypozyczenia"]));
+    $data_oddania = date('Y/m/d', strtotime($_POST["data_oddania"]));
     $status = $_POST["status"];
 
-    $query = 'BEGIN edytuj_umowe(:id, :id_pojazdu, :id_klienta, :id_ubezpieczenia, :data_wypozyczenia, :data_oddania, :status); END;';
+    $query = 'BEGIN edytuj_umowe(:id, :id_pojazdu, :id_klienta, :id_ubezpieczenia, TO_DATE(:data_wypozyczenia, \'YYYY-MM-DD\'), TO_DATE(:data_oddania, \'YYYY-MM-DD\'), :status); END;';
     $stmt = oci_parse($conn, $query);
     oci_bind_by_name($stmt, ':id', $id);
     oci_bind_by_name($stmt, ':id_pojazdu', $id_pojazdu);

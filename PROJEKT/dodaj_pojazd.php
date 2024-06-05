@@ -74,62 +74,63 @@
             </div>
             
             <div id="layoutSidenav_content">
-            <h2>Dodaj Pojazd</h2>
-            <form action="php/pojazd/dodaj_pojazd.php" method="post">
-                <h4>Dane Pojazdu</h4>
-                <div class="form-group">
-                    <label for="Marka">Marka:</label>
-                    <input type="text" class="form-control" id="Marka" name="Marka" required>
-                </div>
-                <div class="form-group">
-                    <label for="Model">Model:</label>
-                    <input type="text" class="form-control" id="Model" name="Model" required>
-                </div>
-                <div class="form-group">
-                    <label for="Rok_produkcji">Rok Produkcji:</label>
-                    <input type="number" class="form-control" id="Rok_produkcji" name="Rok_produkcji" required>
-                </div>
-                <div class="form-group">
-                    <label for="Kolor">Kolor:</label>
-                    <input type="text" class="form-control" id="Kolor" name="Kolor">
-                </div>
-                <div class="form-group">
-                    <label for="typ_pojazdu">Typ Pojazdu:</label>
-                    <input type="text" class="form-control" id="typ_pojazdu" name="typ_pojazdu">
-                </div>
-                <div class="form-group">
-                    <label for="dostepny">Dostępny:</label>
-                    <input type="text" class="form-control" id="dostepny" name="dostepny" maxlength="1">
-                </div>
-                <div class="form-group">
-                    <label for="numer_VIN">Numer VIN:</label>
-                    <input type="text" class="form-control" id="numer_VIN" name="numer_VIN" required maxlength="17">
-                </div>
-
-                <h4>Dane Techniczne</h4>
-                <div class="form-group">
-                    <label for="pojemnosc_silnika">Pojemność Silnika:</label>
-                    <input type="number" class="form-control" id="pojemnosc_silnika" name="pojemnosc_silnika" required>
-                </div>
-                <div class="form-group">
-                    <label for="moc_silnika">Moc Silnika:</label>
-                    <input type="number" class="form-control" id="moc_silnika" name="moc_silnika" required>
-                </div>
-                <div class="form-group">
-                    <label for="rodzaj_paliwa">Rodzaj Paliwa:</label>
-                    <input type="text" class="form-control" id="rodzaj_paliwa" name="rodzaj_paliwa">
-                </div>
-                <div class="form-group">
-                    <label for="gaz">Gaz (T/N):</label>
-                    <input type="text" class="form-control" id="gaz" name="gaz" maxlength="1">
-                </div>
-                <div class="form-group">
-                    <label for="stan_licznika">Stan Licznika:</label>
-                    <input type="number" class="form-control" id="stan_licznika" name="stan_licznika" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Dodaj Pojazd</button>
-            </form>
+                <h2>Dodaj Pojazd</h2>
+                <form action="php/pojazd/dodaj_pojazd.php" method="post">
+                    <div class="form-group">
+                        <label for="Marka">Marka:</label>
+                        <input type="text" class="form-control" id="Marka" name="Marka" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Model">Model:</label>
+                        <input type="text" class="form-control" id="Model" name="Model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Rok_produkcji">Rok Produkcji:</label>
+                        <input type="number" class="form-control" id="Rok_produkcji" name="Rok_produkcji" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Kolor">Kolor:</label>
+                        <input type="text" class="form-control" id="Kolor" name="Kolor">
+                    </div>
+                    <div class="form-group">
+                        <label for="typ_pojazdu">Typ Pojazdu:</label>
+                        <input type="text" class="form-control" id="typ_pojazdu" name="typ_pojazdu">
+                    </div>
+                    <div class="form-group">
+                        <label for="dostepny">Dostępny:</label>
+                        <input type="text" class="form-control" id="dostepny" name="dostepny" maxlength="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="numer_VIN">Numer VIN:</label>
+                        <input type="text" class="form-control" id="numer_VIN" name="numer_VIN" required maxlength="17">
+                    </div>
+                    <div class="form-group">
+                        <label for="pojemnosc_silnika">Pojemność Silnika:</label>
+                        <input type="number" class="form-control" id="pojemnosc_silnika" name="pojemnosc_silnika" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="moc_silnika">Moc Silnika:</label>
+                        <input type="number" class="form-control" id="moc_silnika" name="moc_silnika" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rodzaj_paliwa">Rodzaj Paliwa:</label>
+                        <input type="text" class="form-control" id="rodzaj_paliwa" name="rodzaj_paliwa">
+                    </div>
+                    <div class="form-group">
+                        <label for="gaz">Gaz (T/N):</label>
+                        <input type="text" class="form-control" id="gaz" name="gaz" maxlength="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="stan_licznika">Stan Licznika:</label>
+                        <input type="number" class="form-control" id="stan_licznika" name="stan_licznika" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_cennik">ID Cennika:</label>
+                        <input type="number" class="form-control" id="id_cennik" name="id_cennik" required>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Dodaj Pojazd</button>
+                </form>
         </div>   
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

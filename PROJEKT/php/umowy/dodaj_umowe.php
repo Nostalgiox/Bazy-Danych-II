@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = oci_execute($stmt);
 
     if ($result) {
-        // header("Location: ../../wyswietl_umowy.php");
+        header("Location: ../../wyswietl_umowy.php");
     } else {
         $e = oci_error($stmt);
         echo "Błąd dodawania umowy: " . $e['message'];

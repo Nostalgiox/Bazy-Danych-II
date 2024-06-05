@@ -1,7 +1,6 @@
 CREATE TABLE "Cennik" (
   "id" NUMBER(10),
   "kwota_za_dzien" NUMBER(6,2) NOT NULL,
-  "kwota_za_kilometr" NUMBER(6,2) NOT NULL,
   "kaucja" NUMBER(6,2) NOT NULL,
   "kara" NUMBER(6,2) NOT NULL,
   PRIMARY KEY ("id")
@@ -75,6 +74,7 @@ CREATE TABLE "Umowy_wypozyczenia" (
   "data_oddania" DATE,
   "status" VARCHAR2(50),
   "stan_licznika_przed" NUMBER(10),
+  "laczna_cena" NUMBER(10,2),
   PRIMARY KEY ("id"),
   CONSTRAINT "FK_Umowy_wypozyczenia_id_klienta"
     FOREIGN KEY ("id_klienta")
@@ -129,19 +129,20 @@ CREATE TABLE "Historia" (
   CONSTRAINT "FK_Historia_id_cennik"
     FOREIGN KEY ("id_cennik")
       REFERENCES "Cennik"("id")
+      ON DELETE CASCADE
 );
 
 --Dane do Cennika--
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (1, 45.00, 1.50, 700.00, 200.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (2, 50.00, 1.70, 800.00, 220.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (3, 39.00, 1.45, 720.00, 190.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (4, 45.00, 1.80, 690.00, 240.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (5, 44.00, 1.25, 650.00, 225.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (6, 43.99, 0.90, 710.00, 185.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (7, 40.50, 1.35, 700.00, 197.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (8, 41.99, 1.60, 680.00, 212.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (9, 45.95, 1.35, 720.00, 202.00);
-INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kwota_za_kilometr", "kaucja", "kara") VALUES (10, 50.99, 1.40, 750.00, 233.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (1, 45.00, 700.00, 200.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (2, 50.00, 800.00, 220.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (3, 39.00, 720.00, 190.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (4, 45.00, 690.00, 240.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (5, 44.00, 650.00, 225.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (6, 43.99, 710.00, 185.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (7, 40.50, 700.00, 197.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (8, 41.99, 680.00, 212.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (9, 45.95, 720.00, 202.00);
+INSERT INTO "BAZY_DANYCH"."Cennik" ("id", "kwota_za_dzien", "kaucja", "kara") VALUES (10, 50.99, 750.00, 233.00);
 
 --Dane do Ubezpieczeń--
 INSERT INTO "BAZY_DANYCH"."Ubezpieczenie" ("id", "rodzaj_ubezpieczenia", "kwota_pokrycia", "skladka") VALUES (1, 'OC', 4000.00, 500.00);
@@ -164,7 +165,7 @@ INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica",
 INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (9, '09-009', 'Gdynia', 'ul. Starowiejska', 80, NULL);
 INSERT INTO "BAZY_DANYCH"."Adres" ("id", "kod_pocztowy", "miejscowosc", "ulica", "nr_domu", "nr_lokalu") VALUES (10, '10-010', 'Bydgoszcz', 'ul. Dworcowa', 90, 1);
 
---Dane do Klijentów--
+--Dane do Klientów--
 INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (1, 'Jan', 'Kowalski', 1, 'ABC123456', '12345678901');
 INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (2, 'Anna', 'Nowak', 2, 'DEF654321', '23456789012');
 INSERT INTO "BAZY_DANYCH"."Klienci" ("id", "imie", "nazwisko", "id_adresu", "nr_dowodu", "pesel") VALUES (3, 'Piotr', 'Wiśniewski', 3, 'GHI987654', '34567890123');
@@ -240,7 +241,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 1)
+         WHERE p."id" = 1),
+	 oblicz_cene_wypozyczenia(1)
     );
 
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 

@@ -106,7 +106,7 @@
                     <?php
                     require_once 'php/conn.php';
 
-                    $query = 'SELECT * FROM "Umowy_wypozyczenia"';
+                    $query = 'SELECT * FROM "Umowy_wypozyczenia" ORDER BY "id"';
                     $stmt = oci_parse($conn, $query);
                     oci_execute($stmt);
 
@@ -124,6 +124,7 @@
                         echo '<form action="php/umowy/usun_umowe.php" method="post" style="display:inline;">';
                         echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
                         echo '<button type="submit" class="btn btn-danger btn-sm">Usuń</button>';
+                        echo '<a href="wyswietl_szczegoly.php?id=' . $row['id'] . '" class="btn btn-primary btn-sm">Wyświetl informacje</a>'; // Przycisk "Wyświetl informacje"
                         echo '</form>';
                         echo '</td>';
                         echo '</tr>';

@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rodzaj_paliwa = $_POST['rodzaj_paliwa'];
     $gaz = $_POST['gaz'];
     $stan_licznika = $_POST['stan_licznika'];
-
+    
     // Dodaj dane techniczne
     $query_dane_techniczne = 'BEGIN dodaj_dane_techniczne(:pojemnosc_silnika, :moc_silnika, :rodzaj_paliwa, :gaz, :stan_licznika); END;';
     $stmt_dane_techniczne = oci_parse($conn, $query_dane_techniczne);
@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_execute($stmt_last_id);
     $row = oci_fetch_assoc($stmt_last_id);
     $id_dane_techniczne = (int)$row['id'];
-    var_dump($id_dane_techniczne);
     oci_free_statement($stmt_last_id);
 
     // Dodaj pojazd
@@ -50,7 +49,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_execute($stmt_pojazd);
     oci_free_statement($stmt_pojazd);
 
+    // Pobierz ID cennika z formularza
+    $id_cennik = (int)$_POST['id_cennik'];
+
+    var_dump($id_cennik);
+
+    // Pobierz ID ostatnio dodanego pojazdu
+    $query_last_vehicle_id = 'SELECT "Pojazd_seq".CURRVAL AS "id" FROM dual';
+    $stmt_last_vehicle_id = oci_parse($conn, $query_last_vehicle_id);
+    oci_execute($stmt_last_vehicle_id);
+    $row = oci_fetch_assoc($stmt_last_vehicle_id);
+    $id_pojazdu = (int)$row['id'];
+    oci_free_statement($stmt_last_vehicle_id);
+
+    // Dodaj wpis do tabeli Historia
+    $query_historia = 'BEGIN dodaj_historie(:id_cennik, :id_pojazd); END;';
+    $stmt_historia = oci_parse($conn, $query_historia);
+    oci_bind_by_name($stmt_historia, ':id_cennik', $id_cennik);
+    oci_bind_by_name($stmt_historia, ':id_pojazd', $id_pojazdu);
+    if (!oci_execute($stmt_historia)) {
+        $error_message = oci_error($stmt_historia)['message'];
+        echo "Błąd podczas wykonywania procedury dodawania historii: $error_message";
+    }
+    oci_free_statement($stmt_historia);
+
+
     oci_close($conn);
+
 
     header("Location: ../../wyswietl_pojazdy.php");
 }
