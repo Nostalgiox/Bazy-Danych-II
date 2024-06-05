@@ -7,40 +7,38 @@ require_once("../conn.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $id = $_POST["id"];
 
-    // Wywołanie procedury usuwającej pojazd
-    $query = 'BEGIN usun_pojazd(:id); END;';
-    $stmt = oci_parse($conn, $query);
-    oci_bind_by_name($stmt, ':id', $id);
+    // Sprawdzenie, czy pojazd jest powiązany z umową
+    $checkQuery = 'SELECT COUNT(*) AS count FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = :id';
+    $checkStmt = oci_parse($conn, $checkQuery);
+    oci_bind_by_name($checkStmt, ':id', $id);
+    oci_execute($checkStmt);
+    $row = oci_fetch_assoc($checkStmt);
+    oci_free_statement($checkStmt);
 
-    // Wywołanie procedury usuwającej dane techniczne
-    $query2 = 'BEGIN usun_dane_techniczne(:id); END;';
-    $stmt2 = oci_parse($conn, $query2);
-    oci_bind_by_name($stmt2, ':id', $id);
-
-    // Wykonaj procedury z obsługą błędów
-    $result1 = oci_execute($stmt);
-    if (!$result1) {
-        $e = oci_error($stmt);
-        echo "Błąd usuwania pojazdu: " . $e['message'];
-    }
-
-    $result2 = oci_execute($stmt2);
-    if (!$result2) {
-        $e = oci_error($stmt2);
-        echo "Błąd usuwania danych technicznych: " . $e['message'];
-    }
-
-    // Zwolnij zasoby
-    oci_free_statement($stmt);
-    oci_free_statement($stmt2);
-    oci_close($conn);
-
-    if ($result1 && $result2) {
-        // Przekierowanie użytkownika z powrotem do strony głównej
-        header("Location: ../../wyswietl_pojazdy.php");
-        exit();
+    if ($row['COUNT'] > 0) {
+        echo "Nie można usunąć pojazdu, ponieważ jest powiązany z umową.";
     } else {
-        echo "Nie udało się usunąć pojazdu lub danych technicznych.";
+        // Wywołanie procedury usuwającej pojazd i dane techniczne
+        $query = 'BEGIN usun_pojazd(:id); END;';
+        $stmt = oci_parse($conn, $query);
+        oci_bind_by_name($stmt, ':id', $id);
+
+        $result1 = oci_execute($stmt);
+        if (!$result1) {
+            $e = oci_error($stmt);
+            echo "Błąd usuwania pojazdu: " . $e['message'];
+        }
+
+        oci_free_statement($stmt);
+        oci_close($conn);
+
+        if ($result1) {
+            // Przekierowanie użytkownika z powrotem do strony głównej
+            header("Location: ../../wyswietl_pojazdy.php");
+            exit();
+        } else {
+            echo "Nie udało się usunąć pojazdu.";
+        }
     }
 } else {
     echo "Niepoprawne żądanie.";

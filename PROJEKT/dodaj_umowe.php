@@ -12,7 +12,7 @@
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand (po lewej stronie) -->
             <a class="navbar-brand ps-3 me-auto" href="index.html">Strona główna</a>
             
@@ -20,7 +20,7 @@
             <button class="btn btn-link btn-sm me-4" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         </nav>>
         <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+            <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -67,6 +67,20 @@
                                     <a class="nav-link" href="wyswietl_pojazdy.php">Wyświetl pojazdy</a>
                                 </nav>
                             </div>
+
+
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Umowy
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
+                                    <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                </nav>
+                            </div>
                             
                     </div>
                     
@@ -74,49 +88,92 @@
             </div>
             
             <div id="layoutSidenav_content">
-                <h2>Dane Techniczne Pojazdu</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Pojemność silnika</th>
-                            <th>Moc silnika</th>
-                            <th>Rodzaj paliwa</th>
-                            <th>Gaz</th>
-                            <th>Stan licznika</th>
-                            <th>Akcje</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <h2>Dodaj Umowę</h2>
+                <form action="php/umowy/dodaj_umowe.php" method="post">
+                    <div class="form-group">
+                        <label for="id_pojazdu">Pojazd:</label>
                         <?php
-                        require_once 'php/conn.php';
+                        // Połączenie z bazą danych
+                        require_once("php/conn.php");
 
-                        $id_dane_techniczne = $_GET['id']; // Pobierz id_dane_techniczne z parametru GET
-
-                        $query = 'SELECT * FROM "Dane_techniczne" WHERE "id" = :id_dane_techniczne'; // Zapytanie o dane techniczne na podstawie id
+                        // Zapytanie SQL
+                        $query = 'SELECT * FROM "Pojazd"';
                         $stmt = oci_parse($conn, $query);
-                        oci_bind_by_name($stmt, ':id_dane_techniczne', $id_dane_techniczne); // Binduje wartość parametru
                         oci_execute($stmt);
 
-                        $row = oci_fetch_assoc($stmt); // Pobierz dane zapytania
+                        // Pętla wypisująca pojazdy w formie rozwijanej listy
+                        echo '<select name="id_pojazdu" id="id_pojazdu" class="form-control">';
+                        while ($row = oci_fetch_assoc($stmt)) {
+                            echo '<option value="' . (int)$row['id'] . '">' . $row['Marka'] . ' ' . $row['Model'] . '</option>';
+                        }
+                        echo '</select>';
 
-                        // Wyświetl dane techniczne pojazdu w formie tabeli
-                        echo '<tr>';
-                        echo '<td>' . $row['pojemnosc_silnika'] . '</td>';
-                        echo '<td>' . $row['moc_silnika'] . '</td>';
-                        echo '<td>' . $row['rodzaj_paliwa'] . '</td>';
-                        echo '<td>' . $row['gaz'] . '</td>';
-                        echo '<td>' . $row['stan_licznika'] . '</td>';
-                        echo '<td>';
-                        echo '<a href="edytuj_dane_techniczne.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj dane techniczne</a>'; // Przycisk "Edytuj dane techniczne"
-                        echo '</td>';
-                        echo '</tr>';
-
+                        // Zwolnienie zasobów
                         oci_free_statement($stmt);
-                        oci_close($conn);
+                        
                         ?>
-                    </tbody>
-                </table>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_klienta">Klient:</label>
+                        <?php
+                        // Połączenie z bazą danych
+                        require_once("php/conn.php");
+
+                        // Zapytanie SQL
+                        $query = 'SELECT * FROM "Klienci"';
+                        $stmt = oci_parse($conn, $query);
+                        oci_execute($stmt);
+
+                        // Generowanie rozwijanej listy z klientami
+                        echo '<select name="id_klienta" id="id_klienta" class="form-control">';
+                        while ($row = oci_fetch_assoc($stmt)) {
+                            echo '<option value="' . (int)$row['id'] . '">' . $row['imie'] . ' ' . $row['nazwisko'] . '</option>';
+                        }
+                        echo '</select>';
+
+                        // Zwolnienie zasobów
+                        oci_free_statement($stmt);
+                        
+                        ?>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="id_ubezpieczenia">Ubezpieczenie:</label>
+                        <?php
+                        // Połączenie z bazą danych
+                        require_once("php/conn.php");
+
+                        // Zapytanie SQL
+                        $query = 'SELECT * FROM "Ubezpieczenie"';
+                        $stmt = oci_parse($conn, $query);
+                        oci_execute($stmt);
+
+                        // Generowanie rozwijanej listy z ubezpieczeniami
+                        echo '<select name="id_ubezpieczenia" id="id_ubezpieczenia" class="form-control">';
+                        while ($row = oci_fetch_assoc($stmt)) {
+                            echo '<option value="' . (int)$row['id'] . '">' . $row['rodzaj_ubezpieczenia'] . '</option>';
+                        }
+                        echo '</select>';
+
+                        // Zwolnienie zasobów
+                        oci_free_statement($stmt);
+                        
+                        ?>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="data_wypozyczenia">Data Wypożyczenia:</label>
+                        <input type="date" class="form-control" id="data_wypozyczenia" name="data_wypozyczenia" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="data_oddania">Data Oddania:</label>
+                        <input type="date" class="form-control" id="data_oddania" name="data_oddania">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Dodaj Umowę</button>
+                </form>
             </div>
+        
         </div>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -128,3 +185,4 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
+<?php  oci_close($conn);?>

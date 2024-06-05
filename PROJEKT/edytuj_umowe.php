@@ -12,7 +12,7 @@
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand (po lewej stronie) -->
             <a class="navbar-brand ps-3 me-auto" href="index.html">Strona główna</a>
             
@@ -20,7 +20,7 @@
             <button class="btn btn-link btn-sm me-4" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         </nav>>
         <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+            <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -67,6 +67,20 @@
                                     <a class="nav-link" href="wyswietl_pojazdy.php">Wyświetl pojazdy</a>
                                 </nav>
                             </div>
+
+
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Umowy
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
+                                    <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                </nav>
+                            </div>
                             
                     </div>
                     
@@ -74,49 +88,60 @@
             </div>
             
             <div id="layoutSidenav_content">
-                <h2>Dane Techniczne Pojazdu</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Pojemność silnika</th>
-                            <th>Moc silnika</th>
-                            <th>Rodzaj paliwa</th>
-                            <th>Gaz</th>
-                            <th>Stan licznika</th>
-                            <th>Akcje</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        require_once 'php/conn.php';
+                <h2>Edytuj Umowę</h2>
+                <?php
+                require_once 'php/conn.php';
 
-                        $id_dane_techniczne = $_GET['id']; // Pobierz id_dane_techniczne z parametru GET
+                if (isset($_GET['id'])) {
+                    $id = $_GET['id'];
+                    $query = 'SELECT * FROM "Umowy_wypozyczenia" WHERE "id" = :id';
+                    $stmt = oci_parse($conn, $query);
+                    oci_bind_by_name($stmt, ':id', $id);
+                    oci_execute($stmt);
 
-                        $query = 'SELECT * FROM "Dane_techniczne" WHERE "id" = :id_dane_techniczne'; // Zapytanie o dane techniczne na podstawie id
-                        $stmt = oci_parse($conn, $query);
-                        oci_bind_by_name($stmt, ':id_dane_techniczne', $id_dane_techniczne); // Binduje wartość parametru
-                        oci_execute($stmt);
-
-                        $row = oci_fetch_assoc($stmt); // Pobierz dane zapytania
-
-                        // Wyświetl dane techniczne pojazdu w formie tabeli
-                        echo '<tr>';
-                        echo '<td>' . $row['pojemnosc_silnika'] . '</td>';
-                        echo '<td>' . $row['moc_silnika'] . '</td>';
-                        echo '<td>' . $row['rodzaj_paliwa'] . '</td>';
-                        echo '<td>' . $row['gaz'] . '</td>';
-                        echo '<td>' . $row['stan_licznika'] . '</td>';
-                        echo '<td>';
-                        echo '<a href="edytuj_dane_techniczne.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj dane techniczne</a>'; // Przycisk "Edytuj dane techniczne"
-                        echo '</td>';
-                        echo '</tr>';
-
-                        oci_free_statement($stmt);
-                        oci_close($conn);
+                    if ($row = oci_fetch_assoc($stmt)) {
                         ?>
-                    </tbody>
-                </table>
+                        <form action="php/umowy/edytuj_umowe.php" method="post">
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <div class="form-group">
+                                <label for="id_pojazdu">ID Pojazdu:</label>
+                                <input type="number" class="form-control" id="id_pojazdu" name="id_pojazdu" value="<?php echo $row['id_pojazdu']; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_klienta">ID Klienta:</label>
+                                <input type="number" class="form-control" id="id_klienta" name="id_klienta" value="<?php echo $row['id_klienta']; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_ubezpieczenia">ID Ubezpieczenia:</label>
+                                <input type="number" class="form-control" id="id_ubezpieczenia" name="id_ubezpieczenia" value="<?php echo $row['id_ubezpieczenia']; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="data_wypozyczenia">Data Wypożyczenia:</label>
+                                <input type="date" class="form-control" id="data_wypozyczenia" name="data_wypozyczenia" value="<?php echo $row['data_wypozyczenia']; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="data_oddania">Data Oddania:</label>
+                                <input type="date" class="form-control" id="data_oddania" name="data_oddania" value="<?php echo $row['data_oddania']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <input type="text" class="form-control" id="status" name="status" value="<?php echo $row['status']; ?>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                        </form>
+                        <?php
+                    } else {
+                        echo "Umowa o podanym ID nie została znaleziona.";
+                    }
+
+                    oci_free_statement($stmt);
+                    oci_close($conn);
+                } else {
+                    echo "ID umowy nie zostało przekazane.";
+                }
+                ?>
             </div>
+        
         </div>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

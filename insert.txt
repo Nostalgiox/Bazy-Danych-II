@@ -73,6 +73,8 @@ CREATE TABLE "Umowy_wypozyczenia" (
   "id_ubezpieczenia" NUMBER(10) NOT NULL,
   "data_wypozyczenia" DATE,
   "data_oddania" DATE,
+  "status" VARCHAR2(50),
+  "stan_licznika_przed" NUMBER(10),
   PRIMARY KEY ("id"),
   CONSTRAINT "FK_Umowy_wypozyczenia_id_klienta"
     FOREIGN KEY ("id_klienta")
@@ -224,21 +226,251 @@ INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Ko
 INSERT INTO "BAZY_DANYCH"."Pojazd" ("id", "Marka", "Model", "Rok_produkcji", "Kolor", "id_dane_techniczne", "typ_pojazdu", "dostepny", "numer_VIN") VALUES (20,'Yamaha', 'MT-07', 2021, 'Zielony', 20, 'Motocykl', 'T', 'JYARM03E4MA123456');
 
 --Dane do Umowy_wypozyczenia--
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (1, 1, 1, 1,TO_DATE('2024-05-12', 'YYYY-MM-DD'), TO_DATE('2024-05-20', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (2, 6, 2, 2,TO_DATE('2024-05-15', 'YYYY-MM-DD'), TO_DATE('2024-05-22', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (3, 11, 3, 3,TO_DATE('2024-05-18', 'YYYY-MM-DD'), TO_DATE('2024-05-25', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (4, 16, 4, 4,TO_DATE('2024-05-20', 'YYYY-MM-DD'), TO_DATE('2024-05-27', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (5, 20, 5, 5,TO_DATE('2024-05-22', 'YYYY-MM-DD'), TO_DATE('2024-05-29', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (6, 2, 6, 6, TO_DATE('2024-05-25', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (7, 7, 7, 1, TO_DATE('2024-05-28', 'YYYY-MM-DD'), TO_DATE('2024-06-05', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (8, 12, 8, 2, TO_DATE('2024-05-30', 'YYYY-MM-DD'), TO_DATE('2024-06-07', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (9, 17, 9, 3, TO_DATE('2024-06-02', 'YYYY-MM-DD'), TO_DATE('2024-06-09', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (10, 3, 10, 4, TO_DATE('2024-06-05', 'YYYY-MM-DD'), TO_DATE('2024-06-12', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (11, 8, 11, 5, TO_DATE('2024-06-08', 'YYYY-MM-DD'), TO_DATE('2024-06-15', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (12, 13, 12, 6, TO_DATE('2024-06-10', 'YYYY-MM-DD'), TO_DATE('2024-06-17', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (13, 18, 13, 2, TO_DATE('2024-06-12', 'YYYY-MM-DD'), TO_DATE('2024-06-19', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (14, 4, 14, 4, TO_DATE('2024-06-15', 'YYYY-MM-DD'), TO_DATE('2024-06-22', 'YYYY-MM-DD'));
-INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania") VALUES (15, 9, 15, 5, TO_DATE('2024-06-18', 'YYYY-MM-DD'), TO_DATE('2024-06-25', 'YYYY-MM-DD'));
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        1, 
+        1, 
+        1, 
+        1, 
+        TO_DATE('2024-05-12', 'YYYY-MM-DD'), 
+        TO_DATE('2024-05-20', 'YYYY-MM-DD'), 
+        'zakończona', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 1)
+    );
+
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        2, 
+        6, 
+        2, 
+        2, 
+        TO_DATE('2024-05-15', 'YYYY-MM-DD'), 
+        TO_DATE('2024-05-22', 'YYYY-MM-DD'), 
+        'zakończona', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 6)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        3, 
+        11, 
+        3, 
+        3, 
+        TO_DATE('2024-05-18', 'YYYY-MM-DD'), 
+        TO_DATE('2024-05-25', 'YYYY-MM-DD'), 
+        'zaległa', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 11)
+    );
+
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        4, 
+        16, 
+        4, 
+        4, 
+        TO_DATE('2024-05-20', 'YYYY-MM-DD'), 
+        TO_DATE('2024-05-27', 'YYYY-MM-DD'), 
+        'zakończona', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 16)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        5, 
+        20, 
+        5, 
+        5, 
+        TO_DATE('2024-05-22', 'YYYY-MM-DD'), 
+        TO_DATE('2024-05-29', 'YYYY-MM-DD'), 
+        'zakończona', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 20)
+    );
+
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        6, 
+        2, 
+        6, 
+        6, 
+        TO_DATE('2024-05-25', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-01', 'YYYY-MM-DD'), 
+        'zaległa', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 2)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        7, 
+        7, 
+        7, 
+        1, 
+        TO_DATE('2024-05-28', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-05', 'YYYY-MM-DD'), 
+        'zakończona', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 7)
+    );
+
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        8, 
+        12, 
+        8, 
+        2, 
+        TO_DATE('2024-05-30', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-07', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 12)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        9, 
+        17, 
+        9, 
+        3, 
+        TO_DATE('2024-06-02', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-09', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 17)
+    );
+
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        10, 
+        3, 
+        10, 
+        4, 
+        TO_DATE('2024-06-05', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-12', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 3)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        11, 
+        8, 
+        11, 
+        5, 
+        TO_DATE('2024-06-08', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-15', 'YYYY-MM-DD'), 
+        'zakończona', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 8)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        12, 
+        13, 
+        12, 
+        6, 
+        TO_DATE('2024-06-10', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-17', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 13)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        13, 
+        18, 
+        13, 
+        2, 
+        TO_DATE('2024-06-12', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-19', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 18)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        14, 
+        4, 
+        14, 
+        4, 
+        TO_DATE('2024-06-15', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-22', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 4)
+    );
+INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
+    ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
+VALUES 
+    (
+        15, 
+        9, 
+        15, 
+        5, 
+        TO_DATE('2024-06-18', 'YYYY-MM-DD'), 
+        TO_DATE('2024-06-25', 'YYYY-MM-DD'), 
+        'aktywna', 
+        (SELECT "stan_licznika" 
+         FROM "BAZY_DANYCH"."Dane_techniczne" dt
+         JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
+         WHERE p."id" = 9)
+    );
 
 --Dane do Form_płatności--
 INSERT INTO "BAZY_DANYCH"."Forma_platnosci" ("id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV") VALUES (1, 1, 'Całość', 1234567812345678, TO_DATE('2030-12-01', 'YYYY-MM-DD'), 123);

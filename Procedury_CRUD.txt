@@ -404,6 +404,84 @@ BEGIN
 END odczytaj_pojazd;
 
 
+-- Tworzenie procedury
+CREATE OR REPLACE PROCEDURE dodaj_umowe (
+    p_id_pojazdu IN "Umowy_wypozyczenia"."id_pojazdu"%TYPE,
+    p_id_klienta IN "Umowy_wypozyczenia"."id_klienta"%TYPE,
+    p_id_ubezpieczenia IN "Umowy_wypozyczenia"."id_ubezpieczenia"%TYPE,
+    p_data_wypozyczenia IN "Umowy_wypozyczenia"."data_wypozyczenia"%TYPE,
+    p_data_oddania IN "Umowy_wypozyczenia"."data_oddania"%TYPE,
+    p_status IN "Umowy_wypozyczenia"."status"%TYPE
+) AS
+    v_stan_licznika_przed "Dane_techniczne"."stan_licznika"%TYPE;
+    v_umowa_id "Umowy_wypozyczenia"."id"%TYPE;
+BEGIN
+    -- Pobierz stan licznika z tabeli Dane_techniczne
+    SELECT "stan_licznika" INTO v_stan_licznika_przed
+    FROM "Dane_techniczne"
+    WHERE "id" = (SELECT "id_dane_techniczne" FROM "Pojazd" WHERE "id" = p_id_pojazdu);
+
+    -- Pobierz kolejną wartość z sekwencji
+    v_umowa_id := SEQ_UMOWY_WYPOZYCZENIA.NEXTVAL;
+
+    -- Dodaj nową umowę
+    INSERT INTO "Umowy_wypozyczenia" (
+        "id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed"
+    ) VALUES (
+        v_umowa_id, p_id_pojazdu, p_id_klienta, p_id_ubezpieczenia, p_data_wypozyczenia, p_data_oddania, p_status, v_stan_licznika_przed
+    );
+
+    COMMIT;
+END dodaj_umowe;
+
+CREATE OR REPLACE PROCEDURE usun_umowe (
+    p_id IN "Umowy_wypozyczenia"."id"%TYPE
+) AS
+BEGIN
+    -- Usuń rekordy zależne w tabeli Zwroty
+    DELETE FROM "Zwroty" WHERE "id_umowy" = p_id;
+
+    -- Usuń rekordy zależne w tabeli Forma_platnosci
+    DELETE FROM "Forma_platnosci" WHERE "id_umowy" = p_id;
+
+    -- Usuń umowę
+    DELETE FROM "Umowy_wypozyczenia" WHERE "id" = p_id;
+
+    COMMIT;
+END usun_umowe;
+
+CREATE OR REPLACE PROCEDURE edytuj_umowe (
+    p_id IN "Umowy_wypozyczenia"."id"%TYPE,
+    p_id_pojazdu IN "Umowy_wypozyczenia"."id_pojazdu"%TYPE,
+    p_id_klienta IN "Umowy_wypozyczenia"."id_klienta"%TYPE,
+    p_id_ubezpieczenia IN "Umowy_wypozyczenia"."id_ubezpieczenia"%TYPE,
+    p_data_wypozyczenia IN "Umowy_wypozyczenia"."data_wypozyczenia"%TYPE,
+    p_data_oddania IN "Umowy_wypozyczenia"."data_oddania"%TYPE,
+    p_status IN "Umowy_wypozyczenia"."status"%TYPE
+) AS
+BEGIN
+    -- Aktualizuj umowę
+    UPDATE "Umowy_wypozyczenia"
+    SET "id_pojazdu" = p_id_pojazdu,
+        "id_klienta" = p_id_klienta,
+        "id_ubezpieczenia" = p_id_ubezpieczenia,
+        "data_wypozyczenia" = p_data_wypozyczenia,
+        "data_oddania" = p_data_oddania,
+        "status" = p_status
+    WHERE "id" = p_id;
+
+    COMMIT;
+END edytuj_umowe;
+
+
+CREATE SEQUENCE SEQ_UMOWY_WYPOZYCZENIA
+START WITH 1
+INCREMENT BY 1
+NOMAXVALUE
+NOCYCLE;
+
+
+
 
 
 

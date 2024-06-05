@@ -8,6 +8,8 @@ $password = 'bazy_danych'; // hasło użytkownika bazy danych
 // Łączenie z bazą danych Oracle
 $conn = oci_connect($username, $password, "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1)))");
 
+// $conn = oci_connect($username, $password, "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=freepdb1)))");
+
 // Sprawdzenie czy udało się połączyć z bazą danych
 if (!$conn) {
     $error = oci_error();
