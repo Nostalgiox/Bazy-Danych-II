@@ -110,10 +110,54 @@
         </div>
     </div>
 
-
     <div id="layoutSidenav_content">
+        <h1>Dodaj Cennik</h1>
+        <form method="post" action="dodaj_cennik.php">
+            <label for="kwota_za_dzien">Kwota za Dzień:</label>
+            <input type="number" id="kwota_za_dzien" name="kwota_za_dzien" step="any" required><br>
 
-<h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A aspernatur ipsa laborum beatae saepe. Aliquid ipsa tenetur harum! Temporibus perferendis perspiciatis sunt ratione officiis exercitationem alias quam quos accusantium numquam.</h1>
+            <label for="kaucja">Kaucja:</label>
+            <input type="number" id="kaucja" name="kaucja" step="any" required><br>
+
+            <label for="kara">Kara:</label>
+            <input type="number" id="kara" name="kara" step="any" required><br>
+
+            <input type="submit" value="Dodaj">
+        </form>
+        <?php
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        require_once 'php/conn.php';
+
+        $kwota_za_dzien = (float)$_POST['kwota_za_dzien'];
+        $kaucja = (float)$_POST['kaucja'];
+        $kara = (float)$_POST['kara'];
+
+        var_dump($kwota_za_dzien);
+        var_dump($kaucja);
+        var_dump($kara);
+        // Przygotowanie wywołania procedury
+        $stmt = oci_parse($conn, 'BEGIN dodaj_cennik(:kwota_za_dzien, :kaucja, :kara); END;');
+
+        // Przypisanie wartości do zmiennych w procedurze
+        oci_bind_by_name($stmt, ':kwota_za_dzien', $kwota_za_dzien);
+        oci_bind_by_name($stmt, ':kaucja', $kaucja);
+        oci_bind_by_name($stmt, ':kara', $kara);
+
+        // Wykonanie procedury
+        if (oci_execute($stmt)) {
+            echo "Cennik został dodany pomyślnie.";
+        } else {
+            $error = oci_error($stmt);
+            echo "Błąd podczas dodawania cennika: " . $error['message'];
+        }
+
+        // Zwolnienie zasobów
+
+        oci_free_statement($stmt);
+        oci_close($conn);
+    }
+    ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>

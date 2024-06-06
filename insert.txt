@@ -242,7 +242,7 @@ VALUES
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
          WHERE p."id" = 1),
-	 oblicz_cene_wypozyczenia(1)
+	 oblicz_laczna_cene_wynajmu(1)
     );
 
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
@@ -259,7 +259,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 6)
+         WHERE p."id" = 6),
+	 oblicz_laczna_cene_wynajmu(2)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -275,7 +276,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 11)
+         WHERE p."id" = 11),
+	 oblicz_laczna_cene_wynajmu(3)
     );
 
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
@@ -292,7 +294,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 16)
+         WHERE p."id" = 16),
+	 oblicz_laczna_cene_wynajmu(4)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -308,7 +311,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 20)
+         WHERE p."id" = 20),
+	 oblicz_laczna_cene_wynajmu(5)
     );
 
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
@@ -325,7 +329,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 2)
+         WHERE p."id" = 2),
+	 oblicz_laczna_cene_wynajmu(6)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -341,7 +346,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 7)
+         WHERE p."id" = 7),
+	 oblicz_laczna_cene_wynajmu(7)
     );
 
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
@@ -358,7 +364,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 12)
+         WHERE p."id" = 12),
+	 oblicz_laczna_cene_wynajmu(8)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -374,7 +381,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 17)
+         WHERE p."id" = 17),
+	 oblicz_laczna_cene_wynajmu(9)
     );
 
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
@@ -391,7 +399,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 3)
+         WHERE p."id" = 3),
+	 oblicz_laczna_cene_wynajmu(10)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -407,7 +416,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 8)
+         WHERE p."id" = 8),
+	 oblicz_laczna_cene_wynajmu(11)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -423,7 +433,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 13)
+         WHERE p."id" = 13),
+	 oblicz_laczna_cene_wynajmu(12)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -439,7 +450,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 18)
+         WHERE p."id" = 18),
+	 oblicz_laczna_cene_wynajmu(13)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -455,7 +467,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 4)
+         WHERE p."id" = 4),
+	 oblicz_laczna_cene_wynajmu(14)
     );
 INSERT INTO "BAZY_DANYCH"."Umowy_wypozyczenia" 
     ("id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed") 
@@ -471,7 +484,8 @@ VALUES
         (SELECT "stan_licznika" 
          FROM "BAZY_DANYCH"."Dane_techniczne" dt
          JOIN "BAZY_DANYCH"."Pojazd" p ON p."id_dane_techniczne" = dt."id"
-         WHERE p."id" = 9)
+         WHERE p."id" = 9),
+	 oblicz_laczna_cene_wynajmu(15)
     );
 
 --Dane do Form_płatności--

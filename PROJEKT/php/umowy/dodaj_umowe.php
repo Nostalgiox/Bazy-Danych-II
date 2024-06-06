@@ -9,15 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_oddania = date('Y-m-d', strtotime($_POST["data_oddania"]));
     $status = "aktywna";
 
-
-    var_dump($id_pojazdu);
-    var_dump($id_klienta);
-    var_dump($id_ubezpieczenia);
-    var_dump($data_wypozyczenia);
-    var_dump($data_oddania);
-    var_dump($status);
-
-
     // Zapytanie SQL do dodania umowy
     $query = 'BEGIN dodaj_umowe(:id_pojazdu, :id_klienta, :id_ubezpieczenia, TO_DATE(:data_wypozyczenia, \'YYYY-MM-DD\'), TO_DATE(:data_oddania, \'YYYY-MM-DD\'), :status); END;';
 
@@ -32,6 +23,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = oci_execute($stmt);
 
     if ($result) {
+        // Pobierz identyfikator ostatnio dodanego pojazdu
+        $query_last_vehicle_id = 'SELECT MAX("id") AS last_vehicle_id FROM "Pojazd"';
+        $stmt_last_vehicle_id = oci_parse($conn, $query_last_vehicle_id);
+        oci_execute($stmt_last_vehicle_id);
+        $row = oci_fetch_assoc($stmt_last_vehicle_id);
+        $last_vehicle_id = $row['LAST_VEHICLE_ID'];
+
+        // Wywołaj funkcję obliczającą łączną cenę wynajmu dla nowo dodanego pojazdu
+        $query_call_function = 'BEGIN oblicz_laczna_cene_wynajmu(:last_vehicle_id); END;';
+        $stmt_call_function = oci_parse($conn, $query_call_function);
+        oci_bind_by_name($stmt_call_function, ':last_vehicle_id', $last_vehicle_id);
+        oci_execute($stmt_call_function);
+
         header("Location: ../../wyswietl_umowy.php");
     } else {
         $e = oci_error($stmt);
@@ -42,3 +46,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_close($conn);
 }
 ?>
+ 

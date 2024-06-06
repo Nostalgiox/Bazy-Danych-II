@@ -108,12 +108,45 @@
                 </div>
             </nav>
         </div>
+        <div id="layoutSidenav_content">
+            <?php
+            // Pobranie danych umowy do edycji
+            require_once 'php/conn.php';
+
+            // Sprawdzenie, czy przesłano ID umowy
+            if(isset($_GET['id']) && !empty($_GET['id'])) {
+                $umowa_id = $_GET['id'];
+                
+                // Zapytanie SQL o dane umowy
+                $query = 'SELECT * FROM "Umowy_wypozyczenia" WHERE "id" = :id';
+                $stmt = oci_parse($conn, $query);
+                oci_bind_by_name($stmt, ':id', $umowa_id);
+                oci_execute($stmt);
+                
+                // Sprawdzenie, czy umowa istnieje
+                if ($row = oci_fetch_assoc($stmt)) {
+            ?>
+        <main>
+            <div class="container-fluid px-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <h2>Dodaj zwrot</h2>
+                        <form action="php/umowy/zapisz_zwrot.php" method="post">
+                            <input type="hidden" name="umowa_id" value="<?php echo $umowa_id; ?>">
+                            <div class="mb-3">
+                                <label for="stan_licznika" class="form-label">Stan Licznika</label>
+                                <input type="number" class="form-control" id="stan_licznika" name="stan_licznika" value="<?php echo $row['stan_licznika_przed']; ?>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
 
-    <div id="layoutSidenav_content">
-
-<h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A aspernatur ipsa laborum beatae saepe. Aliquid ipsa tenetur harum! Temporibus perferendis perspiciatis sunt ratione officiis exercitationem alias quam quos accusantium numquam.</h1>
+    
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
@@ -127,3 +160,13 @@
 </body>
 
 </html>
+<?php
+    } else {
+        echo "Umowa o podanym ID nie istnieje.";
+    }
+    oci_free_statement($stmt);
+    oci_close($conn);
+} else {
+    echo "Nieprawidłowe żądanie.";
+}
+?>

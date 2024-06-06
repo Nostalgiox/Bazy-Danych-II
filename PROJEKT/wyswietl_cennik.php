@@ -108,13 +108,61 @@
                 </div>
             </nav>
         </div>
+
+        <div id="layoutSidenav_content">
+            <?php
+            require_once 'php/conn.php';
+
+            // Zapytanie do bazy danych, aby pobrać dane z widoku
+        $query = 'SELECT "Marka", "Model", "kwota_za_dzien", "kaucja" FROM vw_cennik';
+        $stmt = oci_parse($conn, $query);
+
+        // Sprawdzenie, czy zapytanie zostało prawidłowo sparsowane
+        if (!$stmt) {
+            $error = oci_error($conn);
+            echo "Błąd parsowania zapytania: " . $error['message'];
+            exit;
+        }
+
+        oci_execute($stmt);
+
+        // Sprawdzenie, czy zapytanie zostało wykonane
+        if (!$stmt) {
+            $error = oci_error($stmt);
+            echo "Błąd wykonania zapytania: " . $error['message'];
+            exit;
+        }
+        ?>
+            <h1>Lista Cenników</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Marka</th>
+                        <th>Model</th>
+                        <th>Kwota za Dzień</th>
+                        <th>Kaucja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = oci_fetch_assoc($stmt)) {
+                        echo '<tr>';
+                        echo '<td>' . htmlspecialchars($row['Marka']) . '</td>'; // Użycie poprawnych nazw kolumn
+                        echo '<td>' . htmlspecialchars($row['Model']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['kwota_za_dzien']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['kaucja']) . '</td>';
+                        echo '</tr>';
+                    }
+                    oci_free_statement($stmt);
+                    oci_close($conn);
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
-    <div id="layoutSidenav_content">
-
-<h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A aspernatur ipsa laborum beatae saepe. Aliquid ipsa tenetur harum! Temporibus perferendis perspiciatis sunt ratione officiis exercitationem alias quam quos accusantium numquam.</h1>
-    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
