@@ -8,9 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_wypozyczenia = date('Y-m-d', strtotime($_POST["data_wypozyczenia"]));
     $data_oddania = date('Y-m-d', strtotime($_POST["data_oddania"]));
     $status = "aktywna";
+    $rodzaj_platnosci = $_POST["rodzaj_platnosci"];
+    $nr_karty = (int)$_POST["nr_karty"];
+    $data_wygasniecia_karty = date('Y-m-d', strtotime($_POST["data_wygasniecia_karty"]));
+    $CVV = (int)$_POST["CVV"];
 
     // Zapytanie SQL do dodania umowy
-    $query = 'BEGIN dodaj_umowe(:id_pojazdu, :id_klienta, :id_ubezpieczenia, TO_DATE(:data_wypozyczenia, \'YYYY-MM-DD\'), TO_DATE(:data_oddania, \'YYYY-MM-DD\'), :status); END;';
+    $query = 'BEGIN dodaj_umowe(:id_pojazdu, :id_klienta, :id_ubezpieczenia, TO_DATE(:data_wypozyczenia, \'YYYY-MM-DD\'), TO_DATE(:data_oddania, \'YYYY-MM-DD\'), :status, :rodzaj_platnosci, :nr_karty, TO_DATE(:data_wygasniecia_karty, \'YYYY-MM-DD\'), :CVV); END;';
 
     $stmt = oci_parse($conn, $query);
     oci_bind_by_name($stmt, ':id_pojazdu', $id_pojazdu);
@@ -19,23 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_bind_by_name($stmt, ':data_wypozyczenia', $data_wypozyczenia);
     oci_bind_by_name($stmt, ':data_oddania', $data_oddania);
     oci_bind_by_name($stmt, ':status', $status);
+    oci_bind_by_name($stmt, ':rodzaj_platnosci', $rodzaj_platnosci);
+    oci_bind_by_name($stmt, ':nr_karty', $nr_karty);
+    oci_bind_by_name($stmt, ':data_wygasniecia_karty', $data_wygasniecia_karty);
+    oci_bind_by_name($stmt, ':CVV', $CVV);
 
     $result = oci_execute($stmt);
 
     if ($result) {
-        // Pobierz identyfikator ostatnio dodanego pojazdu
-        $query_last_vehicle_id = 'SELECT MAX("id") AS last_vehicle_id FROM "Pojazd"';
-        $stmt_last_vehicle_id = oci_parse($conn, $query_last_vehicle_id);
-        oci_execute($stmt_last_vehicle_id);
-        $row = oci_fetch_assoc($stmt_last_vehicle_id);
-        $last_vehicle_id = $row['LAST_VEHICLE_ID'];
-
-        // Wywołaj funkcję obliczającą łączną cenę wynajmu dla nowo dodanego pojazdu
-        $query_call_function = 'BEGIN oblicz_laczna_cene_wynajmu(:last_vehicle_id); END;';
-        $stmt_call_function = oci_parse($conn, $query_call_function);
-        oci_bind_by_name($stmt_call_function, ':last_vehicle_id', $last_vehicle_id);
-        oci_execute($stmt_call_function);
-
         header("Location: ../../wyswietl_umowy.php");
     } else {
         $e = oci_error($stmt);
@@ -46,4 +41,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_close($conn);
 }
 ?>
- 

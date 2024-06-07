@@ -375,21 +375,24 @@ BEGIN
     COMMIT;
 END aktualizuj_pojazd;
 
-CREATE OR REPLACE PROCEDURE usun_pojazd (
+create or replace PROCEDURE usun_pojazd (
     p_id IN "Pojazd"."id"%TYPE
 ) AS
 BEGIN
     -- Usuń rekordy zależne w tabeli Historia
     DELETE FROM "Historia" WHERE "id_pojazd" = p_id;
-    
+
     -- Usuń rekordy zależne w tabeli Umowy_wypozyczenia i powiązanych tabelach Zwroty oraz Forma_platnosci
     DELETE FROM "Zwroty" WHERE "id_umowy" IN (SELECT "id" FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id);
     DELETE FROM "Forma_platnosci" WHERE "id_umowy" IN (SELECT "id" FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id);
     DELETE FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id;
-    
+
     -- Usuń pojazd
     DELETE FROM "Pojazd" WHERE "id" = p_id;
-    
+
+    -- Usuń dane techniczne
+    DELETE FROM "Dane_techniczne" WHERE "id" = (SELECT "id_dane_techniczne" FROM "Pojazd" WHERE "id" = p_id);
+
     COMMIT;
 END usun_pojazd;
 
@@ -405,16 +408,29 @@ END odczytaj_pojazd;
 
 
 -- Tworzenie procedury
+
+CREATE SEQUENCE formy_platnosci_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+
 CREATE OR REPLACE PROCEDURE dodaj_umowe (
     p_id_pojazdu IN "Umowy_wypozyczenia"."id_pojazdu"%TYPE,
     p_id_klienta IN "Umowy_wypozyczenia"."id_klienta"%TYPE,
     p_id_ubezpieczenia IN "Umowy_wypozyczenia"."id_ubezpieczenia"%TYPE,
     p_data_wypozyczenia IN "Umowy_wypozyczenia"."data_wypozyczenia"%TYPE,
     p_data_oddania IN "Umowy_wypozyczenia"."data_oddania"%TYPE,
-    p_status IN "Umowy_wypozyczenia"."status"%TYPE
+    p_status IN "Umowy_wypozyczenia"."status"%TYPE,
+    p_rodzaj_platnosci IN "Forma_platnosci"."rodzaj_platnosci"%TYPE,
+    p_nr_karty IN "Forma_platnosci"."nr_karty"%TYPE,
+    p_data_wygasniecia_karty IN "Forma_platnosci"."data_wygasniecia_karty"%TYPE,
+    p_CVV IN "Forma_platnosci"."CVV"%TYPE
 ) AS
     v_stan_licznika_przed "Dane_techniczne"."stan_licznika"%TYPE;
     v_umowa_id "Umowy_wypozyczenia"."id"%TYPE;
+    v_laczna_cena NUMBER;
 BEGIN
     -- Pobierz stan licznika z tabeli Dane_techniczne
     SELECT "stan_licznika" INTO v_stan_licznika_przed
@@ -431,8 +447,29 @@ BEGIN
         v_umowa_id, p_id_pojazdu, p_id_klienta, p_id_ubezpieczenia, p_data_wypozyczenia, p_data_oddania, p_status, v_stan_licznika_przed
     );
 
+    -- Dodaj dane płatności
+    INSERT INTO "Forma_platnosci" (
+        "id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV"
+    ) VALUES (
+        formy_platnosci_seq.NEXTVAL, v_umowa_id, p_rodzaj_platnosci, p_nr_karty, p_data_wygasniecia_karty, p_CVV
+    );
+
+    -- Oblicz łączną cenę wynajmu
+    v_laczna_cena := oblicz_laczna_cene_wynajmu(v_umowa_id);
+
+    -- Aktualizuj umowę o łączną cenę wynajmu
+    UPDATE "Umowy_wypozyczenia"
+    SET "laczna_cena" = v_laczna_cena
+    WHERE "id" = v_umowa_id;
+
+    -- Ustaw pojazd jako niedostępny
+    UPDATE "Pojazd"
+    SET "dostepny" = 'N'
+    WHERE "id" = p_id_pojazdu;
+
     COMMIT;
 END dodaj_umowe;
+
 
 CREATE OR REPLACE PROCEDURE usun_umowe (
     p_id IN "Umowy_wypozyczenia"."id"%TYPE
@@ -535,18 +572,177 @@ BEGIN
 END;
 
 
-CREATE OR REPLACE PROCEDURE sprawdz_status_umowy (
-    p_id_umowy IN NUMBER,
-    p_status OUT VARCHAR2
-) IS
+create or replace FUNCTION oblicz_laczna_cene_wynajmu (
+    p_id_umowy IN "Umowy_wypozyczenia"."id"%TYPE
+) RETURN NUMBER IS
+    v_kwota_za_dzien "Cennik"."kwota_za_dzien"%TYPE;
+    v_kaucja "Cennik"."kaucja"%TYPE;
+    v_skladka "Ubezpieczenie"."skladka"%TYPE;
+    v_data_wypozyczenia "Umowy_wypozyczenia"."data_wypozyczenia"%TYPE;
+    v_data_oddania "Umowy_wypozyczenia"."data_oddania"%TYPE;
+    v_id_pojazdu "Umowy_wypozyczenia"."id_pojazdu"%TYPE;
+    v_id_cennik "Historia"."id_cennik"%TYPE;
+    v_id_ubezpieczenia "Umowy_wypozyczenia"."id_ubezpieczenia"%TYPE;
+    v_laczna_cena NUMBER;
+    v_dni_wypozyczenia NUMBER;
 BEGIN
-    SELECT "status" INTO p_status
-    FROM "Umowy_wypozyczenia"
-    WHERE "id" = p_id_umowy;
+    BEGIN
+        -- Pobierz daty wypożyczenia i oddania oraz id_pojazdu i id_ubezpieczenia
+        SELECT "data_wypozyczenia", "data_oddania", "id_pojazdu", "id_ubezpieczenia"
+        INTO v_data_wypozyczenia, v_data_oddania, v_id_pojazdu, v_id_ubezpieczenia
+        FROM "Umowy_wypozyczenia"
+        WHERE "id" = p_id_umowy;
+
+        -- Wyświetl pobrane wartości
+        DBMS_OUTPUT.PUT_LINE('Data wypożyczenia: ' || v_data_wypozyczenia);
+        DBMS_OUTPUT.PUT_LINE('Data oddania: ' || v_data_oddania);
+        DBMS_OUTPUT.PUT_LINE('ID pojazdu: ' || v_id_pojazdu);
+        DBMS_OUTPUT.PUT_LINE('ID ubezpieczenia: ' || v_id_ubezpieczenia);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Nie znaleziono umowy wypożyczenia o podanym ID');
+    END;
+
+    -- Oblicz liczbę dni wypożyczenia
+    v_dni_wypozyczenia := v_data_oddania - v_data_wypozyczenia;
+    DBMS_OUTPUT.PUT_LINE('Liczba dni wypożyczenia: ' || v_dni_wypozyczenia);
+
+    BEGIN
+        -- Pobierz id_cennik z tabeli Historia
+        SELECT "id_cennik"
+        INTO v_id_cennik
+        FROM "Historia"
+        WHERE "id_pojazd" = v_id_pojazdu;
+
+        -- Wyświetl pobrane wartości
+        DBMS_OUTPUT.PUT_LINE('ID cennika: ' || v_id_cennik);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Nie znaleziono historii dla podanego pojazdu w tym okresie');
+    END;
+
+    BEGIN
+        -- Pobierz kwotę za dzień i kaucję z tabeli Cennik
+        SELECT "kwota_za_dzien", "kaucja"
+        INTO v_kwota_za_dzien, v_kaucja
+        FROM "Cennik"
+        WHERE "id" = v_id_cennik;
+
+        -- Wyświetl pobrane wartości
+        DBMS_OUTPUT.PUT_LINE('Kwota za dzień: ' || v_kwota_za_dzien);
+        DBMS_OUTPUT.PUT_LINE('Kaucja: ' || v_kaucja);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20003, 'Nie znaleziono cennika o podanym ID');
+    END;
+
+    BEGIN
+        -- Pobierz składkę z tabeli Ubezpieczenie
+        SELECT "skladka"
+        INTO v_skladka
+        FROM "Ubezpieczenie"
+        WHERE "id" = v_id_ubezpieczenia;
+
+        -- Wyświetl pobrane wartości
+        DBMS_OUTPUT.PUT_LINE('Składka: ' || v_skladka);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20004, 'Nie znaleziono ubezpieczenia o podanym ID');
+    END;
+
+    -- Oblicz łączną cenę
+    v_laczna_cena := (v_dni_wypozyczenia * v_kwota_za_dzien) + v_skladka + v_kaucja;
+    DBMS_OUTPUT.PUT_LINE('Łączna cena: ' || v_laczna_cena);
+
+    RETURN v_laczna_cena;
+END oblicz_laczna_cene_wynajmu;
+
+CREATE OR REPLACE TYPE CennikRecord AS OBJECT (
+    id NUMBER,
+    kwota VARCHAR2(100)
+);
+
+CREATE OR REPLACE TYPE CennikTable AS TABLE OF CennikRecord;
+
+CREATE OR REPLACE PROCEDURE PobierzCennik (p_cennik OUT CennikTable) IS
+BEGIN
+    SELECT CennikRecord("id", 'kwota za dzien ' || "kwota_za_dzien" || ', kaucja ' || "kaucja" || ', kara ' || "kara")
+    BULK COLLECT INTO p_cennik
+    FROM "Cennik";
+END PobierzCennik;
+
+CREATE OR REPLACE PROCEDURE zapisz_zwrot (
+    p_umowa_id IN "Umowy_wypozyczenia"."id"%TYPE,
+    p_stan_licznika IN "Dane_techniczne"."stan_licznika"%TYPE
+) AS
+    v_pojazd_id "Umowy_wypozyczenia"."id_pojazdu"%TYPE;
+    v_status "Umowy_wypozyczenia"."status"%TYPE := 'zakonczona';
+    v_dostepny "Pojazd"."dostepny"%TYPE := 'T';
+BEGIN
+    -- Aktualizacja stanu licznika w tabeli "Dane_techniczne"
+    UPDATE "Dane_techniczne"
+    SET "stan_licznika" = p_stan_licznika
+    WHERE "id" = (SELECT "id_dane_techniczne" FROM "Pojazd" WHERE "id" = (SELECT "id_pojazdu" FROM "Umowy_wypozyczenia" WHERE "id" = p_umowa_id));
+
+
+    -- Aktualizacja dostępności pojazdu
+    UPDATE "Pojazd"
+    SET "dostepny" = v_dostepny
+    WHERE "id" = (SELECT "id_pojazdu" FROM "Umowy_wypozyczenia" WHERE "id" = p_umowa_id);
+
+    -- Aktualizacja statusu umowy na "zakończona"
+    UPDATE "Umowy_wypozyczenia"
+    SET "status" = v_status
+    WHERE "id" = p_umowa_id;
+
+    -- Dodanie danych zwrotu do tabeli "Zwroty"
+    INSERT INTO "Zwroty" ("id","id_umowy", "data_oddania", "stan_licznika_po")
+    VALUES (zwroty_seq.NEXTVAL, p_umowa_id, SYSDATE, p_stan_licznika);
+
+    COMMIT;
 EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        p_status := NULL;
-END;
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END zapisz_zwrot;
+
+CREATE OR REPLACE FUNCTION oblicz_przejechane_kilometry (
+    p_miesiac IN VARCHAR2 DEFAULT 'May'
+) RETURN SYS_REFCURSOR AS
+    v_id_pojazdu NUMBER;
+    v_marka VARCHAR2(100);
+    v_model VARCHAR2(100);
+    v_przejechane_kilometry NUMBER;
+    v_result SYS_REFCURSOR;
+BEGIN
+    OPEN v_result FOR
+    SELECT
+        p."id" AS id_pojazdu,
+        p."Marka",
+        p."Model",
+        SUM(z."stan_licznika_po" - u."stan_licznika_przed") AS przejechane_kilometry
+    FROM
+        "Pojazd" p
+        JOIN "Umowy_wypozyczenia" u ON p."id" = u."id_pojazdu"
+        JOIN "Zwroty" z ON u."id" = z."id_umowy"
+    WHERE
+        TO_CHAR(z."data_oddania", 'Month', 'NLS_DATE_LANGUAGE=ENGLISH') = p_miesiac
+    GROUP BY
+        p."id", p."Marka", p."Model"
+    ORDER BY
+        p."id";
+
+    RETURN v_result;
+END oblicz_przejechane_kilometry;
+
+
+
+
+
+
+
+
+
 
 
 

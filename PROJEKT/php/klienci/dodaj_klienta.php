@@ -67,9 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         oci_execute($stmt_klient);
 
 
-        echo "Klient został dodany.";
+        //echo "Klient został dodany.";
 
         oci_free_statement($stmt_klient);
+        header("Location: ../../wyswietl_klientow.php");
     } else {
         echo "Błąd: Nie udało się pobrać ID adresu";
     }

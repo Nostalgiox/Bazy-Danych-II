@@ -72,10 +72,12 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                <a class="nav-link" href="wyswietl_zwroty.php">Wyświetl zwroty</a>
                             </nav>
                         </div>
 
@@ -126,11 +128,38 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="dostepny">Dostępny:</label>
-                                    <input type="text" class="form-control" id="dostepny" name="dostepny" maxlength="1">
+                                    <!-- <input type="text" class="form-control" id="dostepny" name="dostepny" maxlength="1"> -->
+                                    <select class="form-control" name="dostepny" id="dostepny">
+                                        <option value="T">Tak</option>
+                                        <option value="N">Nie</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="numer_VIN">Numer VIN:</label>
                                     <input type="text" class="form-control" id="numer_VIN" name="numer_VIN" required maxlength="17">
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_cennik">Cennik:</label>
+                                    <select class="form-control" id="id_cennik" name="id_cennik">
+                                        <?php
+                                        // Połączenie z bazą danych
+                                        require_once 'php/conn.php';
+
+                                        // Pobieranie dostępnych cenników
+                                        $query = 'SELECT * FROM "Cennik"';
+                                        $stid = oci_parse($conn, $query);
+                                        oci_execute($stid);
+
+                                        // Wyświetlanie opcji cenników w formularzu
+                                        while (($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
+                                            echo "<option value='" . $row['id'] . "'>Kwota za dzień: " . $row['kwota_za_dzien'] . "zł, Kaucja:" . $row['kaucja'] . "zł</option>";
+                                        }
+
+                                        // Zamknięcie połączenia z bazą danych
+                                        oci_free_statement($stid);
+                                        oci_close($conn);
+                                        ?>
+                                    </select>
                                 </div>
 
                                 <h4>Dane Techniczne</h4>

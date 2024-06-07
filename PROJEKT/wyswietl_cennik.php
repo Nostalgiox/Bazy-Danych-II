@@ -87,6 +87,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                <a class="nav-link" href="wyswietl_zwroty.php">Wyświetl zwroty</a>
                             </nav>
                         </div>
 
@@ -133,6 +134,41 @@
             exit;
         }
         ?>
+
+        <h2 class="my-4">Dane z tabeli Cennik</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Kwota za dzień</th>
+                    <th scope="col">Kaucja</th>
+                    <th scope="col">Kara</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
+                // Zapytanie SQL
+                $query2 = 'SELECT * FROM "Cennik"';
+                $stmt2 = oci_parse($conn, $query2);
+                oci_execute($stmt2);
+
+                // Wyświetlenie danych w tabeli
+                while ($row2 = oci_fetch_assoc($stmt2)) {
+                    echo '<tr>';
+                    echo '<td>' . $row2['kwota_za_dzien'] . 'zł</td>';
+                    echo '<td>' . $row2['kaucja'] . 'zł</td>';
+                    echo '<td>' . $row2['kara'] . 'zł</td>';
+                    echo '</tr>';
+                }
+
+                // Zwolnienie zasobów
+                oci_free_statement($stmt2);
+                ?>
+            </tbody>
+        </table>
+
+
+
             <h1>Lista Cenników</h1>
             <table border="1">
                 <thead>

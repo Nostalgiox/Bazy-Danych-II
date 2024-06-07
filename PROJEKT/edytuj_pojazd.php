@@ -72,10 +72,12 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                <a class="nav-link" href="wyswietl_zwroty.php">Wyświetl zwroty</a>
                             </nav>
                         </div>
 
@@ -145,7 +147,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="dostepny">Dostępny:</label>
-                                    <input type="text" class="form-control" id="dostepny" name="dostepny" value="<?php echo $row['dostepny']; ?>" maxlength="1">
+                                    <!-- <input type="text" class="form-control" id="dostepny" name="dostepny" maxlength="1"> -->
+                                    <select class="form-control" name="dostepny" id="dostepny">
+                                        <option value="T">Tak</option>
+                                        <option value="N">Nie</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="numer_VIN">Numer VIN:</label>

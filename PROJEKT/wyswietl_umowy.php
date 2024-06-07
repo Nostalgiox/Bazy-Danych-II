@@ -72,10 +72,12 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                <a class="nav-link" href="wyswietl_zwroty.php">Wyświetl zwroty</a>
                             </nav>
                         </div>
 
@@ -133,8 +135,6 @@
                                             echo '<td>' . $row['status'] . '</td>';
                                             echo '<td>' . $row['stan_licznika_przed'] . '</td>';
                                             echo '<td>';
-                                            
-                                            echo '<a href="edytuj_umowe.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj</a> ';
                                             echo '<form action="php/umowy/usun_umowe.php" method="post" style="display:inline;">';
                                             echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
                                             echo '<button type="submit" class="btn btn-danger btn-sm">Usuń</button>';
@@ -142,6 +142,9 @@
                                             if ($row['status'] == "aktywna" || $row['status'] == 'zalegla') {
                                                 echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
                                                 echo '<a href="dodaj_zwrot.php?id=' . $row['id'] . '" class="btn btn-success btn-sm">Zwrot</a>';
+                                            }
+                                            if ($row['status'] == "aktywna") {
+                                                echo '<a href="edytuj_umowe.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj</a> ';
                                             }
                                             echo '</form>';
                                             echo '</td>';

@@ -72,10 +72,12 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                <a class="nav-link" href="wyswietl_zwroty.php">Wyświetl zwroty</a>
                             </nav>
                         </div>
 
@@ -183,7 +185,29 @@
                                         <label for="data_oddania">Data Oddania:</label>
                                         <input type="date" class="form-control" id="data_oddania" name="data_oddania">
                                     </div>
-                                    <br>
+                                    <!-- Pole dla rodzaju płatności -->
+                                    <div class="form-group">
+                                        <label for="rodzaj_platnosci">Rodzaj płatności:</label>
+                                        <select name="rodzaj_platnosci" id="rodzaj_platnosci" class="form-control">
+                                            <option value="Calosc">Całość</option>
+                                            <option value="Raty">Raty</option>
+                                        </select>
+                                    </div>
+                                    <!-- Pole dla numeru karty -->
+                                    <div class="form-group">
+                                        <label for="nr_karty">Numer karty:</label>
+                                        <input type="number" class="form-control" id="nr_karty" name="nr_karty" required>
+                                    </div>
+                                    <!-- Pole dla daty wygaśnięcia karty -->
+                                    <div class="form-group">
+                                        <label for="data_wygasniecia_karty">Data wygaśnięcia karty:</label>
+                                        <input type="date" class="form-control" id="data_wygasniecia_karty" name="data_wygasniecia_karty" required>
+                                    </div>
+                                    <!-- Pole dla CVV -->
+                                    <div class="form-group">
+                                        <label for="CVV">CVV:</label>
+                                        <input type="text" class="form-control" id="CVV" name="CVV" required>
+                                    </div>
                                     <button type="submit" class="btn btn-primary">Dodaj Umowę</button>
                                 </div>
                             </form>

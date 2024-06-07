@@ -24,7 +24,6 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Strona główna
@@ -75,12 +74,27 @@
                                 Umowy
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
-                                    <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
-                                </nav>
-                            </div>
+                            <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
+                                <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
+                                <a class="nav-link" href="wyswietl_zwroty.php">Wyświetl zwroty</a>
+                            </nav>
+                        </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCennik"
+                            aria-expanded="false" aria-controls="collapsePojazd">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Cennik
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseCennik" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="dodaj_cennik.php">Dodaj cennik</a>
+                                <a class="nav-link" href="wyswietl_cennik.php">Wyświetl cennik</a>
+                            </nav>
+                        </div>
                             
                     </div>
                     
@@ -106,8 +120,6 @@
                                 JOIN "Ubezpieczenie" ub ON u."id_ubezpieczenia" = ub."id"
                                 WHERE u."id" = :umowa_id';
 
-
-
                     $stmt = oci_parse($conn, $query);
                     oci_bind_by_name($stmt, ':umowa_id', $umowa_id);
                     oci_execute($stmt);
@@ -121,7 +133,7 @@
                         echo '<tr><td>Data Oddania:</td><td>' . $row['data_oddania'] . '</td></tr>';
                         echo '<tr><td>Status:</td><td>' . $row['status'] . '</td></tr>';
                         echo '<tr><td>Stan Licznika Przed:</td><td>' . $row['stan_licznika_przed'] . '</td></tr>';
-                        echo '<tr><td>Łączna Cena:</td><td>' . $row['laczna_cena'] . '</td></tr>';
+                        echo '<tr><td>Łączna Cena:</td><td>' . $row['laczna_cena'] . 'zł</td></tr>';
                         echo '<tr><td>Imię Klienta:</td><td>' . $row['imie'] . '</td></tr>';
                         echo '<tr><td>Nazwisko Klienta:</td><td>' . $row['nazwisko'] . '</td></tr>';
                         echo '<tr><td>PESEL Klienta:</td><td>' . $row['pesel'] . '</td></tr>';
@@ -131,11 +143,32 @@
                         echo '<tr><td>Rodzaj Ubezpieczenia:</td><td>' . $row['rodzaj_ubezpieczenia'] . '</td></tr>';
                         echo '</tbody>';
                         echo '</table>';
+
+                        // Dodajemy sekcję dla formy płatności
+                        echo '<h2>Forma Płatności</h2>';
+                        $query_platnosc = 'SELECT * FROM "Forma_platnosci" WHERE "id_umowy" = :umowa_id';
+                        $stmt_platnosc = oci_parse($conn, $query_platnosc);
+                        oci_bind_by_name($stmt_platnosc, ':umowa_id', $umowa_id);
+                        oci_execute($stmt_platnosc);
+
+                        echo '<table class="table table-bordered">';
+                        echo '<thead>';
+                        echo '<tr><th>Rodzaj Płatności</th><th>Numer Karty</th><th>Data Wygaśnięcia Karty</th><th>CVV</th></tr>';
+                        echo '</thead>';
+                        echo '<tbody>';
+                        while ($platnosc_row = oci_fetch_assoc($stmt_platnosc)) {
+                            echo '<tr>';
+                            echo '<td>' . $platnosc_row['rodzaj_platnosci'] . '</td>';
+                            echo '<td>' . $platnosc_row['nr_karty'] . '</td>';
+                            echo '<td>' . $platnosc_row['data_wygasniecia_karty'] . '</td>';
+                            echo '<td>' . $platnosc_row['CVV'] . '</td>';
+                            echo '</tr>';
+                        }
+                        echo '</tbody>';
+                        echo '</table>';
                     } else {
                         echo '<p>Nie znaleziono umowy o podanym identyfikatorze.</p>';
                     }
-                    
-                    
 
                     oci_free_statement($stmt);
                     oci_close($conn);
@@ -144,6 +177,7 @@
                 }
                 ?>
             </div>
+
         
         </div>
         
