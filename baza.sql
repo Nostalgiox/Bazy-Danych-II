@@ -22,52 +22,52 @@
 --  DDL for Sequence ADRES_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."ADRES_SEQ"  MINVALUE 11 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 12 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."ADRES_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 12 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence CENNIK_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."CENNIK_SEQ"  MINVALUE 11 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 17 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."CENNIK_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 17 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence DANE_TECHNICZNE_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."DANE_TECHNICZNE_SEQ"  MINVALUE 21 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 70 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."DANE_TECHNICZNE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 70 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence FORMY_PLATNOSCI_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."FORMY_PLATNOSCI_SEQ"  MINVALUE 16 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."FORMY_PLATNOSCI_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 16 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence HISTORIA_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."HISTORIA_SEQ"  MINVALUE 21 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 37 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."HISTORIA_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence KLIENCI_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."KLIENCI_SEQ"  MINVALUE 16 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."KLIENCI_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 16 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence Pojazd_seq
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."Pojazd_seq"  MINVALUE 21 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 68 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."Pojazd_seq"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_UMOWY_WYPOZYCZENIA
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."SEQ_UMOWY_WYPOZYCZENIA"  MINVALUE 16 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 48 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."SEQ_UMOWY_WYPOZYCZENIA"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 16 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence UBEZPIECZENIE_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."UBEZPIECZENIE_SEQ"  MINVALUE 7 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 33 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."UBEZPIECZENIE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 7 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Sequence ZWROTY_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "BAZY_DANYCH"."ZWROTY_SEQ"  MINVALUE 11 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 12 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "BAZY_DANYCH"."ZWROTY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 11 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Table Adres
 --------------------------------------------------------
@@ -308,12 +308,12 @@ GROUP BY
 REM INSERTING into BAZY_DANYCH."Adres"
 SET DEFINE OFF;
 Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('1','01-001','Warszawa','Aleje Jerozolimskie','10',null);
-Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('2','02-002','Kraków','Rynek G³ówny','15',null);
-Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('3','03-003','Gdañsk','ul. D³uga','20','5');
-Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('4','04-004','Wroc³aw','Plac Solny','30',null);
-Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('5','05-005','Poznañ','ul. Wielka','40',null);
-Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('6','06-006','£ódŸ','ul. Piotrkowska','50','2');
-Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('7','07-007','Szczecin','ul. Ma³eckiego','60',null);
+Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('2','02-002','Krak w','Rynek G  wny','15',null);
+Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('3','03-003','Gda sk','ul. D uga','20','5');
+Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('4','04-004','Wroc aw','Plac Solny','30',null);
+Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('5','05-005','Pozna ','ul. Wielka','40',null);
+Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('6','06-006','  d ','ul. Piotrkowska','50','2');
+Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('7','07-007','Szczecin','ul. Ma eckiego','60',null);
 Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('8','08-008','Katowice','ul. Warszawska','70','3');
 Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('9','09-009','Gdynia','ul. Starowiejska','80',null);
 Insert into BAZY_DANYCH."Adres" ("id","kod_pocztowy","miejscowosc","ulica","nr_domu","nr_lokalu") values ('10','10-010','Bydgoszcz','ul. Dworcowa','90','1');
@@ -327,6 +327,7 @@ Insert into BAZY_DANYCH."Cennik" ("id","kwota_za_dzien","kaucja","kara") values 
 Insert into BAZY_DANYCH."Cennik" ("id","kwota_za_dzien","kaucja","kara") values ('6','43,99','710','185');
 Insert into BAZY_DANYCH."Cennik" ("id","kwota_za_dzien","kaucja","kara") values ('7','40,5','700','197');
 Insert into BAZY_DANYCH."Cennik" ("id","kwota_za_dzien","kaucja","kara") values ('8','41,99','680','212');
+Insert into BAZY_DANYCH."Cennik" ("id","kwota_za_dzien","kaucja","kara") values ('9','45,95','720','202');
 Insert into BAZY_DANYCH."Cennik" ("id","kwota_za_dzien","kaucja","kara") values ('10','50,95','749','235');
 REM INSERTING into BAZY_DANYCH."Dane_techniczne"
 SET DEFINE OFF;
@@ -352,21 +353,21 @@ Insert into BAZY_DANYCH."Dane_techniczne" ("id","pojemnosc_silnika","moc_silnika
 Insert into BAZY_DANYCH."Dane_techniczne" ("id","pojemnosc_silnika","moc_silnika","rodzaj_paliwa","gaz","stan_licznika") values ('20','700','75','Benzyna','N','6000');
 REM INSERTING into BAZY_DANYCH."Forma_platnosci"
 SET DEFINE OFF;
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('1','1','Ca³oœæ','1234567812345678',to_date('30/12/01','RR/MM/DD'),'123');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('2','2','Ca³oœæ','2345678923456789',to_date('31/01/01','RR/MM/DD'),'234');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('3','3','Ca³oœæ','3456789034567890',to_date('32/02/01','RR/MM/DD'),'345');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('4','4','Ca³oœæ','4567890145678901',to_date('33/03/01','RR/MM/DD'),'456');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('5','5','Ca³oœæ','5678901256789012',to_date('34/04/01','RR/MM/DD'),'567');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('6','6','Ca³oœæ','6789012367890123',to_date('35/05/01','RR/MM/DD'),'678');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('7','7','Ca³oœæ','7890123478901234',to_date('30/06/01','RR/MM/DD'),'789');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('8','8','Ca³oœæ','8901234589012345',to_date('31/07/01','RR/MM/DD'),'890');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('9','9','Ca³oœæ','9012345690123456',to_date('32/08/01','RR/MM/DD'),'901');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('10','10','Ca³oœæ','1234567812345678',to_date('33/09/01','RR/MM/DD'),'123');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('11','11','Ca³oœæ','2345678923456789',to_date('34/10/01','RR/MM/DD'),'234');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('12','12','Ca³oœæ','3456789034567890',to_date('35/11/01','RR/MM/DD'),'345');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('13','13','Ca³oœæ','4567890145678901',to_date('30/12/01','RR/MM/DD'),'456');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('14','14','Ca³oœæ','5678901256789012',to_date('31/01/01','RR/MM/DD'),'567');
-Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('15','15','Ca³oœæ','6789012367890123',to_date('32/02/01','RR/MM/DD'),'678');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('1','1','Ca o  ','1234567812345678',to_date('30/12/01','RR/MM/DD'),'123');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('2','2','Ca o  ','2345678923456789',to_date('31/01/01','RR/MM/DD'),'234');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('3','3','Ca o  ','3456789034567890',to_date('32/02/01','RR/MM/DD'),'345');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('4','4','Ca o  ','4567890145678901',to_date('33/03/01','RR/MM/DD'),'456');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('5','5','Ca o  ','5678901256789012',to_date('34/04/01','RR/MM/DD'),'567');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('6','6','Ca o  ','6789012367890123',to_date('35/05/01','RR/MM/DD'),'678');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('7','7','Ca o  ','7890123478901234',to_date('30/06/01','RR/MM/DD'),'789');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('8','8','Ca o  ','8901234589012345',to_date('31/07/01','RR/MM/DD'),'890');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('9','9','Ca o  ','9012345690123456',to_date('32/08/01','RR/MM/DD'),'901');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('10','10','Ca o  ','1234567812345678',to_date('33/09/01','RR/MM/DD'),'123');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('11','11','Ca o  ','2345678923456789',to_date('34/10/01','RR/MM/DD'),'234');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('12','12','Ca o  ','3456789034567890',to_date('35/11/01','RR/MM/DD'),'345');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('13','13','Ca o  ','4567890145678901',to_date('30/12/01','RR/MM/DD'),'456');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('14','14','Ca o  ','5678901256789012',to_date('31/01/01','RR/MM/DD'),'567');
+Insert into BAZY_DANYCH."Forma_platnosci" ("id","id_umowy","rodzaj_platnosci","nr_karty","data_wygasniecia_karty",CVV) values ('15','15','Ca o  ','6789012367890123',to_date('32/02/01','RR/MM/DD'),'678');
 REM INSERTING into BAZY_DANYCH."Historia"
 SET DEFINE OFF;
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('1','1','1',to_date('24/05/05','RR/MM/DD'),null);
@@ -377,6 +378,7 @@ Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") valu
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('6','6','6',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('7','7','7',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('8','8','8',to_date('24/05/05','RR/MM/DD'),null);
+Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('8','8','8',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('10','10','10',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('11','1','11',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('12','2','12',to_date('24/05/05','RR/MM/DD'),null);
@@ -386,44 +388,45 @@ Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") valu
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('16','6','16',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('17','7','17',to_date('24/05/05','RR/MM/DD'),null);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('18','8','18',to_date('24/05/05','RR/MM/DD'),null);
+INSERT INTO BAZY_DANYCH."Historia" ("id", "id_cennik", "id_pojazd", "od", "do") VALUES (19, 9, 19, TO_DATE('2024-05-05', 'YYYY-MM-DD'), NULL);
 Insert into BAZY_DANYCH."Historia" ("id","id_cennik","id_pojazd","od","do") values ('20','10','20',to_date('24/05/05','RR/MM/DD'),null);
 REM INSERTING into BAZY_DANYCH."Klienci"
 SET DEFINE OFF;
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('1','Jan','Kowalski','1','ABC123456','12345678901');
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('2','Anna','Nowak','2','DEF654321','23456789012');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('3','Piotr','Wiœniewski','3','GHI987654','34567890123');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('4','Maria','D¹browska','4','JKL123456','45678901234');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('3','Piotr','Wi niewski','3','GHI987654','34567890123');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('4','Maria','D browska','4','JKL123456','45678901234');
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('5','Adam','Lewandowski','5','MNO654321','56789012345');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('6','Alicja','Wójcik','6','PQR987654','67890123456');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('7','Marek','Kamiñski','7','STU123456','78901234567');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('8','Ewa','Zieliñska','8','VWX654321','89012345678');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('6','Alicja','W jcik','6','PQR987654','67890123456');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('7','Marek','Kami ski','7','STU123456','78901234567');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('8','Ewa','Zieli ska','8','VWX654321','89012345678');
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('9','Tomasz','Kowalczyk','9','YZA987654','90123456789');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('10','Karolina','WoŸniak','10','BCD123456','01234567890');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('10','Karolina','Wo niak','10','BCD123456','01234567890');
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('11','Katarzyna','Jankowska','1','EFG123456','12345678910');
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('12','Robert','Wojciechowski','2','HIJ654321','23456789101');
 Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('13','Monika','Krawczyk','3','KLM987654','34567891012');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('14','£ukasz','Witkowski','4','NOP123456','45678910123');
-Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('15','Magdalena','Zaj¹c','5','QRS654321','56789101234');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('14',' ukasz','Witkowski','4','NOP123456','45678910123');
+Insert into BAZY_DANYCH."Klienci" ("id","imie","nazwisko","id_adresu","nr_dowodu","pesel") values ('15','Magdalena','Zaj c','5','QRS654321','56789101234');
 REM INSERTING into BAZY_DANYCH."Pojazd"
 SET DEFINE OFF;
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('1','Toyota','Corolla','2018','Czerwony','1','Samochód','T','JTDKB20U987654321');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('2','Ford','Focus','2019','Czarny','2','Samochód','T','1FADP3E27EL123456');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('3','Volkswagen','Golf','2020','Bia³y','3','Samochód','T','WVWZZZ1JZ2W123456');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('4','Honda','Civic','2017','Srebrny','4','Samochód','N','SHHFK7H44U1234567');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('5','BMW','3 Series','2016','Niebieski','5','Samochód','T','WBA3N5C50EF712345');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('1','Toyota','Corolla','2018','Czerwony','1','Samoch d','T','JTDKB20U987654321');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('2','Ford','Focus','2019','Czarny','2','Samoch d','T','1FADP3E27EL123456');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('3','Volkswagen','Golf','2020','Bia y','3','Samoch d','T','WVWZZZ1JZ2W123456');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('4','Honda','Civic','2017','Srebrny','4','Samoch d','N','SHHFK7H44U1234567');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('5','BMW','3 Series','2016','Niebieski','5','Samoch d','T','WBA3N5C50EF712345');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('6','Kawasaki','Ninja 300','2020','Czarny','6','Motocykl','T','JKAEX8A15FDA12345');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('7','Yamaha','YZF-R6','2019','¯ó³ty','7','Motocykl','T','JYARJ16E77A123456');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('7','Yamaha','YZF-R6','2019','  ty','7','Motocykl','T','JYARJ16E77A123456');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('8','Harley-Davidson','Sportster Iron 883','2018','Czarny','8','Motocykl','N','1HD1LE21YJC123456');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('9','Suzuki','GSX-R1000','2021','Niebieski','9','Motocykl','T','JS1DM11B9M1234567');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('10','Ducati','Panigale V4','2020','Czerwony','10','Motocykl','T','ZDMH602AABCD12345');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('11','Audi','A4','2017','Czarny','11','Samochód','T','WAUZZZF44HN123456');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('12','Mercedes-Benz','C-Class','2018','Srebrny','12','Samochód','T','WDDGF8BB0AF123456');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('13','Volvo','S60','2019','Czerwony','13','Samochód','N','YV1FS84D1B1234567');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('14','Peugeot','308','2020','Bia³y','14','Samochód','T','YV1FS84D1B1234567');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('15','Opel','Astra','2021','Niebieski','15','Samochód','N','W0L0*************');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('11','Audi','A4','2017','Czarny','11','Samoch d','T','WAUZZZF44HN123456');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('12','Mercedes-Benz','C-Class','2018','Srebrny','12','Samoch d','T','WDDGF8BB0AF123456');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('13','Volvo','S60','2019','Czerwony','13','Samoch d','N','YV1FS84D1B1234567');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('14','Peugeot','308','2020','Bia y','14','Samoch d','T','YV1FS84D1B1234567');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('15','Opel','Astra','2021','Niebieski','15','Samoch d','N','W0L0*************');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('16','Harley-Davidson','Street Glide','2017','Czarny','16','Motocykl','T','1HD1KB419BB123456');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('17','KTM','Duke 390','2018','Pomarañczowy','17','Motocykl','T','MD2**************');
-Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('18','BMW','R 1250 GS Adventure','2019','¯ó³ty','18','Motocykl','N','WB10K130*HZ123456');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('17','KTM','Duke 390','2018','Pomara czowy','17','Motocykl','T','MD2**************');
+Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('18','BMW','R 1250 GS Adventure','2019','  ty','18','Motocykl','N','WB10K130*HZ123456');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('19','Ducati','Monster 821','2020','Czerwony','19','Motocykl','T','ZDMC*************');
 Insert into BAZY_DANYCH."Pojazd" ("id","Marka","Model","Rok_produkcji","Kolor","id_dane_techniczne","typ_pojazdu","dostepny","numer_VIN") values ('20','Yamaha','MT-07','2021','Zielony','20','Motocykl','T','JYARM03E4MA123456');
 REM INSERTING into BAZY_DANYCH."Ubezpieczenie"
@@ -436,16 +439,16 @@ Insert into BAZY_DANYCH."Ubezpieczenie" ("id","rodzaj_ubezpieczenia","kwota_pokr
 Insert into BAZY_DANYCH."Ubezpieczenie" ("id","rodzaj_ubezpieczenia","kwota_pokrycia","skladka") values ('6','OC+AC','7000','1200');
 REM INSERTING into BAZY_DANYCH."Umowy_wypozyczenia"
 SET DEFINE OFF;
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('1','1','1','1',to_date('24/05/12','RR/MM/DD'),to_date('24/05/20','RR/MM/DD'),'zakoñczona','40000','1560');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('2','6','2','2',to_date('24/05/15','RR/MM/DD'),to_date('24/05/22','RR/MM/DD'),'zakoñczona','10000','1717,93');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('3','11','3','3',to_date('24/05/18','RR/MM/DD'),to_date('24/05/25','RR/MM/DD'),'zakoñczona','60000','1615');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('4','16','4','4',to_date('24/05/20','RR/MM/DD'),to_date('24/05/27','RR/MM/DD'),'zakoñczona','10000','1167,93');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('5','20','5','5',to_date('24/05/22','RR/MM/DD'),to_date('24/05/29','RR/MM/DD'),'zakoñczona','5000','1406,93');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('6','2','6','6',to_date('24/05/25','RR/MM/DD'),to_date('24/06/01','RR/MM/DD'),'zakoñczona','30000','2350');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('7','7','7','1',to_date('24/05/28','RR/MM/DD'),to_date('24/06/05','RR/MM/DD'),'zakoñczona','10000','1524');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('8','12','8','2',to_date('24/05/30','RR/MM/DD'),to_date('24/06/07','RR/MM/DD'),'zakoñczona','50000','1900');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('9','17','9','3',to_date('24/06/02','RR/MM/DD'),to_date('24/06/09','RR/MM/DD'),'zakoñczona','10000','1583,5');
-Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('10','3','10','4',to_date('24/06/05','RR/MM/DD'),to_date('24/06/10','RR/MM/DD'),'zakoñczona','20000','1143');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('1','1','1','1',to_date('24/05/12','RR/MM/DD'),to_date('24/05/20','RR/MM/DD'),'zako czona','40000','1560');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('2','6','2','2',to_date('24/05/15','RR/MM/DD'),to_date('24/05/22','RR/MM/DD'),'zako czona','10000','1717,93');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('3','11','3','3',to_date('24/05/18','RR/MM/DD'),to_date('24/05/25','RR/MM/DD'),'zako czona','60000','1615');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('4','16','4','4',to_date('24/05/20','RR/MM/DD'),to_date('24/05/27','RR/MM/DD'),'zako czona','10000','1167,93');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('5','20','5','5',to_date('24/05/22','RR/MM/DD'),to_date('24/05/29','RR/MM/DD'),'zako czona','5000','1406,93');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('6','2','6','6',to_date('24/05/25','RR/MM/DD'),to_date('24/06/01','RR/MM/DD'),'zako czona','30000','2350');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('7','7','7','1',to_date('24/05/28','RR/MM/DD'),to_date('24/06/05','RR/MM/DD'),'zako czona','10000','1524');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('8','12','8','2',to_date('24/05/30','RR/MM/DD'),to_date('24/06/07','RR/MM/DD'),'zako czona','50000','1900');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('9','17','9','3',to_date('24/06/02','RR/MM/DD'),to_date('24/06/09','RR/MM/DD'),'zako czona','10000','1583,5');
+Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('10','3','10','4',to_date('24/06/05','RR/MM/DD'),to_date('24/06/10','RR/MM/DD'),'zako czona','20000','1143');
 Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('11','8','11','5',to_date('24/06/08','RR/MM/DD'),to_date('24/06/15','RR/MM/DD'),'aktywna','18000','1273,93');
 Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('12','13','12','6',to_date('24/06/10','RR/MM/DD'),to_date('24/06/17','RR/MM/DD'),'aktywna','50000','2193');
 Insert into BAZY_DANYCH."Umowy_wypozyczenia" ("id","id_pojazdu","id_klienta","id_ubezpieczenia","data_wypozyczenia","data_oddania","status","stan_licznika_przed","laczna_cena") values ('13','18','13','2',to_date('24/06/12','RR/MM/DD'),to_date('24/06/19','RR/MM/DD'),'aktywna','10000','1673,93');
@@ -472,7 +475,7 @@ BEFORE INSERT OR UPDATE ON "Umowy_wypozyczenia"
 FOR EACH ROW
 BEGIN
     IF :NEW."data_oddania" < SYSDATE AND :NEW."status" = 'aktywna' THEN
-        :NEW."status" := 'zaleg³a';
+        :NEW."status" := 'zaleg a';
     END IF;
 END;
 /
@@ -802,32 +805,32 @@ BEGIN
     FROM "Dane_techniczne"
     WHERE "id" = (SELECT "id_dane_techniczne" FROM "Pojazd" WHERE "id" = p_id_pojazdu);
 
-    -- Pobierz kolejn¹ wartoœæ z sekwencji
+    -- Pobierz kolejn  warto   z sekwencji
     v_umowa_id := SEQ_UMOWY_WYPOZYCZENIA.NEXTVAL;
 
-    -- Dodaj now¹ umowê
+    -- Dodaj now  umow 
     INSERT INTO "Umowy_wypozyczenia" (
         "id", "id_pojazdu", "id_klienta", "id_ubezpieczenia", "data_wypozyczenia", "data_oddania", "status", "stan_licznika_przed"
     ) VALUES (
         v_umowa_id, p_id_pojazdu, p_id_klienta, p_id_ubezpieczenia, p_data_wypozyczenia, p_data_oddania, p_status, v_stan_licznika_przed
     );
 
-    -- Dodaj dane p³atnoœci
+    -- Dodaj dane p atno ci
     INSERT INTO "Forma_platnosci" (
         "id", "id_umowy", "rodzaj_platnosci", "nr_karty", "data_wygasniecia_karty", "CVV"
     ) VALUES (
         formy_platnosci_seq.NEXTVAL, v_umowa_id, p_rodzaj_platnosci, p_nr_karty, p_data_wygasniecia_karty, p_CVV
     );
 
-    -- Oblicz ³¹czn¹ cenê wynajmu
+    -- Oblicz   czn  cen  wynajmu
     v_laczna_cena := oblicz_laczna_cene_wynajmu(v_umowa_id);
 
-    -- Aktualizuj umowê o ³¹czn¹ cenê wynajmu
+    -- Aktualizuj umow  o   czn  cen  wynajmu
     UPDATE "Umowy_wypozyczenia"
     SET "laczna_cena" = v_laczna_cena
     WHERE "id" = v_umowa_id;
 
-    -- Ustaw pojazd jako niedostêpny
+    -- Ustaw pojazd jako niedost pny
     UPDATE "Pojazd"
     SET "dostepny" = 'N'
     WHERE "id" = p_id_pojazdu;
@@ -874,7 +877,7 @@ set define off;
 ) AS
     v_laczna_cena NUMBER;
 BEGIN
-    -- Aktualizuj umowê
+    -- Aktualizuj umow 
     UPDATE "Umowy_wypozyczenia"
     SET "id_pojazdu" = p_id_pojazdu,
         "id_klienta" = p_id_klienta,
@@ -944,10 +947,10 @@ set define off;
     p_id IN "Dane_techniczne"."id"%TYPE
 ) AS
 BEGIN
-    -- Usuñ rekordy zale¿ne w tabeli Pojazd
+    -- Usu  rekordy zale ne w tabeli Pojazd
     DELETE FROM "Pojazd" WHERE "id_dane_techniczne" = p_id;
     
-    -- Usuñ dane techniczne
+    -- Usu  dane techniczne
     DELETE FROM "Dane_techniczne" WHERE "id" = p_id;
     
     COMMIT;
@@ -977,18 +980,18 @@ set define off;
     p_id IN "Pojazd"."id"%TYPE
 ) AS
 BEGIN
-    -- Usuñ rekordy zale¿ne w tabeli Historia
+    -- Usu  rekordy zale ne w tabeli Historia
     DELETE FROM "Historia" WHERE "id_pojazd" = p_id;
 
-    -- Usuñ rekordy zale¿ne w tabeli Umowy_wypozyczenia i powi¹zanych tabelach Zwroty oraz Forma_platnosci
+    -- Usu  rekordy zale ne w tabeli Umowy_wypozyczenia i powi zanych tabelach Zwroty oraz Forma_platnosci
     DELETE FROM "Zwroty" WHERE "id_umowy" IN (SELECT "id" FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id);
     DELETE FROM "Forma_platnosci" WHERE "id_umowy" IN (SELECT "id" FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id);
     DELETE FROM "Umowy_wypozyczenia" WHERE "id_pojazdu" = p_id;
 
-    -- Usuñ pojazd
+    -- Usu  pojazd
     DELETE FROM "Pojazd" WHERE "id" = p_id;
 
-    -- Usuñ dane techniczne
+    -- Usu  dane techniczne
     DELETE FROM "Dane_techniczne" WHERE "id" = (SELECT "id_dane_techniczne" FROM "Pojazd" WHERE "id" = p_id);
 
     COMMIT;
@@ -1018,13 +1021,13 @@ set define off;
     p_id IN "Umowy_wypozyczenia"."id"%TYPE
 ) AS
 BEGIN
-    -- Usuñ rekordy zale¿ne w tabeli Zwroty
+    -- Usu  rekordy zale ne w tabeli Zwroty
     DELETE FROM "Zwroty" WHERE "id_umowy" = p_id;
 
-    -- Usuñ rekordy zale¿ne w tabeli Forma_platnosci
+    -- Usu  rekordy zale ne w tabeli Forma_platnosci
     DELETE FROM "Forma_platnosci" WHERE "id_umowy" = p_id;
 
-    -- Usuñ umowê
+    -- Usu  umow 
     DELETE FROM "Umowy_wypozyczenia" WHERE "id" = p_id;
 
     COMMIT;
@@ -1050,12 +1053,12 @@ BEGIN
     WHERE "id" = (SELECT "id_dane_techniczne" FROM "Pojazd" WHERE "id" = (SELECT "id_pojazdu" FROM "Umowy_wypozyczenia" WHERE "id" = p_umowa_id));
 
 
-    -- Aktualizacja dostêpnoœci pojazdu
+    -- Aktualizacja dost pno ci pojazdu
     UPDATE "Pojazd"
     SET "dostepny" = v_dostepny
     WHERE "id" = (SELECT "id_pojazdu" FROM "Umowy_wypozyczenia" WHERE "id" = p_umowa_id);
 
-    -- Aktualizacja statusu umowy na "zakoñczona"
+    -- Aktualizacja statusu umowy na "zako czona"
     UPDATE "Umowy_wypozyczenia"
     SET "status" = v_status
     WHERE "id" = p_umowa_id;
@@ -1091,25 +1094,25 @@ END zapisz_zwrot;
     v_dni_wypozyczenia NUMBER;
 BEGIN
     BEGIN
-        -- Pobierz daty wypo¿yczenia i oddania oraz id_pojazdu i id_ubezpieczenia
+        -- Pobierz daty wypo yczenia i oddania oraz id_pojazdu i id_ubezpieczenia
         SELECT "data_wypozyczenia", "data_oddania", "id_pojazdu", "id_ubezpieczenia"
         INTO v_data_wypozyczenia, v_data_oddania, v_id_pojazdu, v_id_ubezpieczenia
         FROM "Umowy_wypozyczenia"
         WHERE "id" = p_id_umowy;
 
-        -- Wyœwietl pobrane wartoœci
-        DBMS_OUTPUT.PUT_LINE('Data wypo¿yczenia: ' || v_data_wypozyczenia);
+        -- Wy wietl pobrane warto ci
+        DBMS_OUTPUT.PUT_LINE('Data wypo yczenia: ' || v_data_wypozyczenia);
         DBMS_OUTPUT.PUT_LINE('Data oddania: ' || v_data_oddania);
         DBMS_OUTPUT.PUT_LINE('ID pojazdu: ' || v_id_pojazdu);
         DBMS_OUTPUT.PUT_LINE('ID ubezpieczenia: ' || v_id_ubezpieczenia);
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20001, 'Nie znaleziono umowy wypo¿yczenia o podanym ID');
+            RAISE_APPLICATION_ERROR(-20001, 'Nie znaleziono umowy wypo yczenia o podanym ID');
     END;
 
-    -- Oblicz liczbê dni wypo¿yczenia
+    -- Oblicz liczb  dni wypo yczenia
     v_dni_wypozyczenia := v_data_oddania - v_data_wypozyczenia;
-    DBMS_OUTPUT.PUT_LINE('Liczba dni wypo¿yczenia: ' || v_dni_wypozyczenia);
+    DBMS_OUTPUT.PUT_LINE('Liczba dni wypo yczenia: ' || v_dni_wypozyczenia);
 
     BEGIN
         -- Pobierz id_cennik z tabeli Historia
@@ -1118,7 +1121,7 @@ BEGIN
         FROM "Historia"
         WHERE "id_pojazd" = v_id_pojazdu;
 
-        -- Wyœwietl pobrane wartoœci
+        -- Wy wietl pobrane warto ci
         DBMS_OUTPUT.PUT_LINE('ID cennika: ' || v_id_cennik);
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
@@ -1126,14 +1129,14 @@ BEGIN
     END;
 
     BEGIN
-        -- Pobierz kwotê za dzieñ i kaucjê z tabeli Cennik
+        -- Pobierz kwot  za dzie  i kaucj  z tabeli Cennik
         SELECT "kwota_za_dzien", "kaucja"
         INTO v_kwota_za_dzien, v_kaucja
         FROM "Cennik"
         WHERE "id" = v_id_cennik;
 
-        -- Wyœwietl pobrane wartoœci
-        DBMS_OUTPUT.PUT_LINE('Kwota za dzieñ: ' || v_kwota_za_dzien);
+        -- Wy wietl pobrane warto ci
+        DBMS_OUTPUT.PUT_LINE('Kwota za dzie : ' || v_kwota_za_dzien);
         DBMS_OUTPUT.PUT_LINE('Kaucja: ' || v_kaucja);
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
@@ -1141,22 +1144,22 @@ BEGIN
     END;
 
     BEGIN
-        -- Pobierz sk³adkê z tabeli Ubezpieczenie
+        -- Pobierz sk adk  z tabeli Ubezpieczenie
         SELECT "skladka"
         INTO v_skladka
         FROM "Ubezpieczenie"
         WHERE "id" = v_id_ubezpieczenia;
 
-        -- Wyœwietl pobrane wartoœci
-        DBMS_OUTPUT.PUT_LINE('Sk³adka: ' || v_skladka);
+        -- Wy wietl pobrane warto ci
+        DBMS_OUTPUT.PUT_LINE('Sk adka: ' || v_skladka);
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
             RAISE_APPLICATION_ERROR(-20004, 'Nie znaleziono ubezpieczenia o podanym ID');
     END;
 
-    -- Oblicz ³¹czn¹ cenê
+    -- Oblicz   czn  cen 
     v_laczna_cena := (v_dni_wypozyczenia * v_kwota_za_dzien) + v_skladka + v_kaucja;
-    DBMS_OUTPUT.PUT_LINE('£¹czna cena: ' || v_laczna_cena);
+    DBMS_OUTPUT.PUT_LINE('  czna cena: ' || v_laczna_cena);
 
     RETURN v_laczna_cena;
 END oblicz_laczna_cene_wynajmu;
