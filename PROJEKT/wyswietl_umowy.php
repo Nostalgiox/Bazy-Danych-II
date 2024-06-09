@@ -26,7 +26,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Strona główna
                         </a>
@@ -72,8 +72,7 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
@@ -98,69 +97,84 @@
             </nav>
         </div>
 
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10">
-                                <h2>Umowy klientów</h2>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID Pojazdu</th>
-                                            <th>ID Klienta</th>
-                                            <th>ID Ubezpieczenia</th>
-                                            <th>Data Wypożyczenia</th>
-                                            <th>Data Oddania</th>
-                                            <th>Status</th>
-                                            <th>Stan Licznika</th>
-                                            <th>Akcje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        require_once 'php/conn.php';
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <h2>Umowy klientów</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Pojazdu</th>
+                                        <th>ID Klienta</th>
+                                        <th>ID Ubezpieczenia</th>
+                                        <th>Data Wypożyczenia</th>
+                                        <th>Data Oddania</th>
+                                        <th>Status</th>
+                                        <th>Stan Licznika</th>
+                                        <th>Akcje</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    require_once 'php/conn.php';
 
-                                        $query = 'SELECT * FROM "Umowy_wypozyczenia"';
-                                        $stmt = oci_parse($conn, $query);
-                                        oci_execute($stmt);
+                                    $query = 'SELECT * FROM "Umowy_wypozyczenia"';
+                                    $stmt = oci_parse($conn, $query);
+                                    oci_execute($stmt);
 
-                                        while ($row = oci_fetch_assoc($stmt)) {
-                                            echo '<tr>';
-                                            echo '<td>' . $row['id_pojazdu'] . '</td>';
-                                            echo '<td>' . $row['id_klienta'] . '</td>';
-                                            echo '<td>' . $row['id_ubezpieczenia'] . '</td>';
-                                            echo '<td>' . $row['data_wypozyczenia'] . '</td>';
-                                            echo '<td>' . $row['data_oddania'] . '</td>';
-                                            echo '<td>' . $row['status'] . '</td>';
-                                            echo '<td>' . $row['stan_licznika_przed'] . '</td>';
-                                            echo '<td>';
-                                            echo '<form action="php/umowy/usun_umowe.php" method="post" style="display:inline;">';
-                                            echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
-                                            echo '<button type="submit" class="btn btn-danger btn-sm">Usuń</button>';
-                                            echo '<a href="wyswietl_szczegoly.php?id=' . $row['id'] . '" class="btn btn-primary btn-sm">Wyświetl informacje</a>'; // Przycisk "Wyświetl informacje"
-                                            if ($row['status'] == "aktywna" || $row['status'] == 'zalegla') {
-                                                echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
-                                                echo '<a href="dodaj_zwrot.php?id=' . $row['id'] . '" class="btn btn-success btn-sm">Zwrot</a>';
-                                            }
-                                            if ($row['status'] == "aktywna") {
-                                                echo '<a href="edytuj_umowe.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj</a> ';
-                                            }
-                                            echo '</form>';
-                                            echo '</td>';
-                                            echo '</tr>';
+                                    while ($row = oci_fetch_assoc($stmt)) {
+                                        // Ustalenie koloru wiersza na podstawie statusu umowy
+                                        $color_class = '';
+                                        switch ($row['status']) {
+                                            case 'zakonczona':
+                                                $color_class = 'table-success'; // Kolor zielony dla statusu "zakonczona"
+                                                break;
+                                            case 'zalegla':
+                                                $color_class = 'table-danger'; // Kolor czerwony dla statusu "zalegla"
+                                                break;
+                                            default:
+                                                $color_class = ''; // Domyślny kolor dla pozostałych statusów
+                                                break;
                                         }
 
-                                        oci_free_statement($stmt);
-                                        oci_close($conn);
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        // Wyświetlanie wiersza tabeli z odpowiednim kolorem
+                                        echo '<tr class="' . $color_class . '">';
+                                        echo '<td>' . $row['id_pojazdu'] . '</td>';
+                                        echo '<td>' . $row['id_klienta'] . '</td>';
+                                        echo '<td>' . $row['id_ubezpieczenia'] . '</td>';
+                                        echo '<td>' . $row['data_wypozyczenia'] . '</td>';
+                                        echo '<td>' . $row['data_oddania'] . '</td>';
+                                        echo '<td>' . $row['status'] . '</td>';
+                                        echo '<td>' . $row['stan_licznika_przed'] . '</td>';
+                                        echo '<td>';
+                                        echo '<form action="php/umowy/usun_umowe.php" method="post" style="display:inline;">';
+                                        echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
+                                        echo '<button type="submit" class="btn btn-danger btn-sm">Usuń</button>';
+                                        echo '<a href="wyswietl_szczegoly.php?id=' . $row['id'] . '" class="btn btn-primary btn-sm">Wyświetl informacje</a>'; // Przycisk "Wyświetl informacje"
+                                        if ($row['status'] == "aktywna" || $row['status'] == 'zalegla') {
+                                            echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
+                                            echo '<a href="dodaj_zwrot.php?id=' . $row['id'] . '" class="btn btn-success btn-sm">Zwrot</a>';
+                                        }
+                                        if ($row['status'] == "aktywna") {
+                                            echo '<a href="edytuj_umowe.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj</a> ';
+                                        }
+                                        echo '</form>';
+                                        echo '</td>';
+                                        echo '</tr>';
+                                    }
+
+                                    oci_free_statement($stmt);
+                                    oci_close($conn);
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </main>
-            </div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

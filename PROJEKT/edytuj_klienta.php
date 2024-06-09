@@ -26,7 +26,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Strona główna
                         </a>
@@ -72,8 +72,7 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
@@ -97,56 +96,57 @@
                 </div>
             </nav>
         </div>
-    </div>
 
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <?php
-                        require_once 'php/conn.php';
 
-                        if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
-                            $id = $_GET["id"];
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <?php
+                            require_once 'php/conn.php';
 
-                            // Pobranie danych klienta o podanym ID z bazy danych
-                            $query_select = 'SELECT * FROM "Klienci" WHERE "id" = :id';
-                            $stmt_select = oci_parse($conn, $query_select);
-                            oci_bind_by_name($stmt_select, ':id', $id);
-                            oci_execute($stmt_select);
+                            if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
+                                $id = $_GET["id"];
 
-                            $row = oci_fetch_assoc($stmt_select);
+                                // Pobranie danych klienta o podanym ID z bazy danych
+                                $query_select = 'SELECT * FROM "Klienci" WHERE "id" = :id';
+                                $stmt_select = oci_parse($conn, $query_select);
+                                oci_bind_by_name($stmt_select, ':id', $id);
+                                oci_execute($stmt_select);
 
-                            oci_free_statement($stmt_select);
-                            oci_close($conn);
-                        ?>
-                            <h2>Edytuj Klienta</h2>
-                            <form action="php/klienci/zapisz_edycje_klienta.php" method="post">
-                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                <div class="form-group">
-                                    <label for="imie">Imię:</label>
-                                    <input type="text" class="form-control" id="imie" name="imie" value="<?php echo $row['imie']; ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nazwisko">Nazwisko:</label>
-                                    <input type="text" class="form-control" id="nazwisko" name="nazwisko" value="<?php echo $row['nazwisko']; ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nr_dowodu">Nr Dowodu:</label>
-                                    <input type="text" class="form-control" id="nr_dowodu" name="nr_dowodu" value="<?php echo $row['nr_dowodu']; ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pesel">PESEL:</label>
-                                    <input type="text" class="form-control" id="pesel" name="pesel" value="<?php echo $row['pesel']; ?>" required>
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-                            </form>
+                                $row = oci_fetch_assoc($stmt_select);
+
+                                oci_free_statement($stmt_select);
+                                oci_close($conn);
+                            ?>
+                                <h2>Edytuj Klienta</h2>
+                                <form action="php/klienci/zapisz_edycje_klienta.php" method="post">
+                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                    <div class="form-group">
+                                        <label for="imie">Imię:</label>
+                                        <input type="text" class="form-control" id="imie" name="imie" value="<?php echo $row['imie']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nazwisko">Nazwisko:</label>
+                                        <input type="text" class="form-control" id="nazwisko" name="nazwisko" value="<?php echo $row['nazwisko']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nr_dowodu">Nr Dowodu:</label>
+                                        <input type="text" class="form-control" id="nr_dowodu" name="nr_dowodu" value="<?php echo $row['nr_dowodu']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pesel">PESEL:</label>
+                                        <input type="text" class="form-control" id="pesel" name="pesel" value="<?php echo $row['pesel']; ?>" required>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
@@ -160,7 +160,7 @@
 </html>
 
 <?php
-                        } else {
-                            echo "Nieprawidłowe żądanie.";
-                        }
+                            } else {
+                                echo "Nieprawidłowe żądanie.";
+                            }
 ?>

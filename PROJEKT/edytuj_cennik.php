@@ -14,13 +14,14 @@
 </head>
 
 <body class="sb-nav-fixed">
+
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand (po lewej stronie) -->
         <a class="navbar-brand ps-3 me-auto" href="index.html">Strona główna</a>
 
         <!-- Sidebar Toggle (po prawej stronie) -->
         <button class="btn btn-link btn-sm me-4" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-    </nav>
+    </nav>>
 
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -92,65 +93,75 @@
                                 <a class="nav-link" href="wyswietl_cennik.php">Wyświetl cennik</a>
                             </nav>
                         </div>
+
+
                     </div>
                 </div>
             </nav>
         </div>
-
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
-                            <h2>Lista Klientów</h2>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Imię</th>
-                                        <th>Nazwisko</th>
-                                        <th>Numer dowodu</th>
-                                        <th>PESEL</th>
-                                        <th>Adres</th>
-                                        <th>Akcje</th> <!-- Dodaj kolumnę akcji -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    require_once("php/conn.php");
+                        <?php
+                        // Połączenie z bazą danych
+                        require_once 'php/conn.php';
 
-                                    // Pobierz wszystkich klientów i ich adresy z bazy danych
-                                    $query = 'SELECT K."id", K."imie", K."nazwisko", K."nr_dowodu", K."pesel", A."kod_pocztowy", A."miejscowosc", A."ulica", A."nr_domu", A."nr_lokalu" 
-                                        FROM "Klienci" K 
-                                        JOIN "Adres" A ON K."id_adresu" = A."id"';
-                                    $stmt = oci_parse($conn, $query);
-                                    oci_execute($stmt);
+                        // Sprawdzenie, czy przekazano parametr id
+                        if (isset($_GET['id'])) {
+                            $id = $_GET['id'];
 
-                                    // Wyświetl każdego klienta w tabeli
-                                    while ($row = oci_fetch_assoc($stmt)) {
-                                        echo '<tr>';
-                                        echo '<td>' . $row['imie'] . '</td>';
-                                        echo '<td>' . $row['nazwisko'] . '</td>';
-                                        echo '<td>' . $row['nr_dowodu'] . '</td>';
-                                        echo '<td>' . $row['pesel'] . '</td>';
-                                        echo '<td>' . $row['kod_pocztowy'] . ' ' . $row['miejscowosc'] . ', ul. ' . $row['ulica'] . ' ' . $row['nr_domu'];
-                                        if ($row['nr_lokalu']) {
-                                            echo '/' . $row['nr_lokalu'];
-                                        }
-                                        echo '</td>';
-                                        // Dodaj przyciski edytuj i usuń dla każdego klienta
-                                        echo '<td>';
-                                        echo '<a href="edytuj_klienta.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edytuj</a>';
-                                        echo '<a href="php/klienci/usun_klienta.php?id=' . $row['id'] . '" class="btn btn-danger btn-sm ml-2" onclick="return confirm(\'Czy na pewno chcesz usunąć tego klienta?\')">Usuń</a>';
-                                        echo '</td>';
-                                        echo '</tr>';
-                                    }
+                            $query = 'SELECT * FROM "Cennik" WHERE "id" = :id';
+                            $stmt = oci_parse($conn, $query);
+                            oci_bind_by_name($stmt, ':id', $_GET['id']);
+                            oci_execute($stmt);
 
-                                    oci_free_statement($stmt);
-                                    oci_close($conn);
-                                    ?>
+                            // Pobranie danych rekordu
+                            $row = oci_fetch_assoc($stmt);
 
-                                </tbody>
-                            </table>
+                            // Zwolnienie zasobów
+                            oci_free_statement($stmt);
+
+                            // Jeśli rekord został znaleziony
+                            if ($row) {
+                                // Jeśli formularz został przesłany
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                    // Wywołanie procedury przechowywanej do aktualizacji danych
+                                    $updateCennikData = oci_parse($conn, 'BEGIN edytuj_cennik(:id, :kwota_za_dzien, :kaucja, :kara); END;');
+                                    oci_bind_by_name($updateCennikData, ':id', $id);
+                                    oci_bind_by_name($updateCennikData, ':kwota_za_dzien', $_POST['kwota_za_dzien']);
+                                    oci_bind_by_name($updateCennikData, ':kaucja', $_POST['kaucja']);
+                                    oci_bind_by_name($updateCennikData, ':kara', $_POST['kara']);
+                                    oci_execute($updateCennikData);
+                                    oci_free_statement($updateCennikData);
+
+                                    header("Location: wyswietl_cennik.php");
+                                }
+                        ?>
+                        <!-- Formularz edycji -->
+                         <h2>Edytuj cennik</h2>
+                        <form method="POST" class="form">
+                            <div class="form-group">
+                                <label for="kwota_za_dzien">Kwota za dzień:</label>
+                                <input type="text" class="form-control" id="kwota_za_dzien" name="kwota_za_dzien" value="<?php echo htmlspecialchars($row['kwota_za_dzien']); ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="kaucja">Kaucja:</label>
+                                <input type="text" class="form-control" id="kaucja" name="kaucja" value="<?php echo htmlspecialchars($row['kaucja']); ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="kara">Kara:</label>
+                                <input type="text" class="form-control" id="kara" name="kara" value="<?php echo htmlspecialchars($row['kara']); ?>">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                        </form>
+
+                        <?php
+                            }
+                        }
+                        ?>
+
                         </div>
                     </div>
                 </div>

@@ -26,7 +26,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Strona główna
                         </a>
@@ -110,11 +110,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="kwota">Kwota pokrycia:</label>
-                                    <input type="number" class="form-control" id="kwota" name="kwota" required>
+                                    <input type="number" class="form-control" id="kwota" name="kwota" step="any" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="skladka">Skladka:</label>
-                                    <input type="number" class="form-control" id="skladka" name="skladka" required>
+                                    <input type="number" class="form-control" id="skladka" name="skladka" step="any" required>
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-primary">Dodaj</button>

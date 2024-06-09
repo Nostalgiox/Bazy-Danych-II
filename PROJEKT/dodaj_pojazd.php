@@ -26,7 +26,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Strona główna
                         </a>
@@ -72,8 +72,7 @@
                             Umowy
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
@@ -102,8 +101,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <div class="row justify-content-center">
-                        <div class="col-lg-10">
-                            <h2>Dodaj Pojazd</h2>
+                        <div class="col-lg-6">
                             <form action="php/pojazd/dodaj_pojazd.php" method="post">
                                 <h4>Dane Pojazdu</h4>
                                 <div class="form-group">
@@ -162,6 +160,10 @@
                                     </select>
                                 </div>
 
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <form>
                                 <h4>Dane Techniczne</h4>
                                 <div class="form-group">
                                     <label for="pojemnosc_silnika">Pojemność Silnika:</label>
@@ -189,10 +191,11 @@
                         </div>
                     </div>
                 </div>
-            </main>
         </div>
+        </main>
     </div>
-    
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
