@@ -22,35 +22,58 @@
         <button class="btn btn-link btn-sm me-4" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     </nav>>
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+    <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
                         <a class="nav-link" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Strona główna
                         </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-sidenav-menu-heading">Interfejs</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseKlienci" aria-expanded="false" aria-controls="collapseKlienci">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Klienci
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseKlienci" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_klienta.php">Dodaj klienta</a>
                                 <a class="nav-link" href="wyswietl_klientow.php">Wyświetl klientów</a>
                             </nav>
                         </div>
 
-
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUbezpieczenia" aria-expanded="false" aria-controls="collapseUbezpieczenia">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Ubezpieczenie
+                            Ubezpieczenia
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseUbezpieczenia" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="dodaj_ubezpieczenie.php">Dodaj ubezpieczenie</a>
+                                <a class="nav-link" href="wyswietl_ubezpieczenia.php">Wyświetl ubezpieczenia</a>
+                            </nav>
+                        </div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePojazd" aria-expanded="false" aria-controls="collapsePojazd">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Pojazd
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePojazd" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="dodaj_pojazd.php">Dodaj pojazd</a>
+                                <a class="nav-link" href="wyswietl_pojazdy.php">Wyświetl pojazdy</a>
+                            </nav>
+                        </div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUmowy" aria-expanded="false" aria-controls="collapsePojazd">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Umowy
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseUmowy" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="dodaj_umowe.php">Dodaj umowę</a>
                                 <a class="nav-link" href="wyswietl_umowy.php">Wyświetl umowy</a>
@@ -58,18 +81,6 @@
                             </nav>
                         </div>
 
-
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Pojazd
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="dodaj_pojazd.php">Dodaj pojazd</a>
-                                <a class="nav-link" href="wyswietl_pojazdy.php">Wyświetl pojazdy</a>
-                            </nav>
-                        </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCennik" aria-expanded="false" aria-controls="collapsePojazd">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Cennik
@@ -83,7 +94,7 @@
                         </div>
 
                     </div>
-
+                </div>
             </nav>
         </div>
 

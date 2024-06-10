@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Wykonanie procedury
         if (oci_execute($stmt)) {
             echo "Zwrot został zapisany pomyślnie. Stan licznika pojazdu został zaktualizowany. Pojazd jest ponownie dostępny do wynajęcia.";
+            header("Location: ../../wyswietl_umowy.php");
         } else {
             echo "Wystąpił błąd podczas aktualizacji zwrotu, stanu licznika pojazdu lub dostępności pojazdu.";
         }

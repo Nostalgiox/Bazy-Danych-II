@@ -136,7 +136,7 @@
                                     oci_bind_by_name($stid, ':miesiac', $wybrany_miesiac);
                                     oci_execute($stid);
 
-                                    echo "<h4>Przejechane kilometry w miesiącu: " . $poprzedni_miesiac . " .</h4>";
+                                    echo "<h4>Przejechane kilometry w miesiącu: " . $wybrany_miesiac . " .</h4>";
 
                                     ?>
                                     <br>

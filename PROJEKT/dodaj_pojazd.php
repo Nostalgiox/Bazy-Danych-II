@@ -102,7 +102,7 @@
                 <div class="container-fluid px-4">
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
-                            <form action="php/pojazd/dodaj_pojazd.php" method="post">
+                            <form action="php/pojazd/dodaj_pojazd.php" method="POST">
                                 <h4>Dane Pojazdu</h4>
                                 <div class="form-group">
                                     <label for="Marka">Marka:</label>
@@ -159,11 +159,6 @@
                                         ?>
                                     </select>
                                 </div>
-
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <form>
                                 <h4>Dane Techniczne</h4>
                                 <div class="form-group">
                                     <label for="pojemnosc_silnika">Pojemność Silnika:</label>
@@ -188,6 +183,9 @@
                                 <br>
                                 <button type="submit" class="btn btn-primary">Dodaj Pojazd</button>
                             </form>
+                        </div>
+                        <div class="col-lg-6">
+
                         </div>
                     </div>
                 </div>

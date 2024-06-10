@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_free_statement($stmt);
     oci_close($conn);
 
-    //header("Location: ../../wyswietl_ubezpieczenia.php");
+    header("Location: ../../wyswietl_ubezpieczenia.php");
     // exit();
 }
 ?>

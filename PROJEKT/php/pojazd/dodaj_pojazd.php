@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $typ_pojazdu = $_POST['typ_pojazdu'];
     $dostepny = $_POST['dostepny'];
     $numer_VIN = $_POST['numer_VIN'];
+    
+    
 
     $pojemnosc_silnika = $_POST['pojemnosc_silnika'];
     $moc_silnika = $_POST['moc_silnika'];

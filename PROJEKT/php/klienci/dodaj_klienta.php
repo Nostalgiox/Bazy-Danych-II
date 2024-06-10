@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         oci_execute($stmt_adres);
 
         // Pobranie ID dodanego adresu
-        $query_last_id = 'SELECT Adres_seq.CURRVAL AS id FROM DUAL';
+        $query_last_id = 'SELECT Adres_seq.CURRVAL AS "id" FROM DUAL';
         $stmt_last_id = oci_parse($conn, $query_last_id);
         oci_execute($stmt_last_id);
         $row_last_id = oci_fetch_assoc($stmt_last_id);

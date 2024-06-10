@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $CVV = (int)$_POST["CVV"];
 
     // Zapytanie SQL do dodania umowy
-    $query = 'BEGIN dodaj_umowe(:id_pojazdu, :id_klienta, :id_ubezpieczenia, TO_DATE(:data_wypozyczenia, \'YYYY-MM-DD\'), TO_DATE(:data_oddania, \'YYYY-MM-DD\'), :status, :rodzaj_platnosci, :nr_karty, TO_DATE(:data_wygasniecia_karty, \'YYYY-MM-DD\'), :CVV); END;';
+    $query = 'BEGIN dodaj_umowe(:id_pojazdu, :id_klienta, :id_ubezpieczenia, TO_DATE(:data_wypozyczenia, \'YYYY-MM-DD\'), 
+    TO_DATE(:data_oddania, \'YYYY-MM-DD\'), :status, :rodzaj_platnosci, :nr_karty, TO_DATE(:data_wygasniecia_karty, \'YYYY-MM-DD\'), :CVV); END;';
 
     $stmt = oci_parse($conn, $query);
     oci_bind_by_name($stmt, ':id_pojazdu', $id_pojazdu);
